@@ -1,16 +1,14 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HUDView : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] Image healthBar;
+    [SerializeField] Image xpBar;
 
-    // Update is called once per frame
-    void Update()
+    void UpdateUI(float health, float maxHealth, float xp, float maxXp)
     {
-        
+        healthBar.fillAmount = health / maxHealth;
+        xpBar.fillAmount = xp / maxXp;
     }
 }

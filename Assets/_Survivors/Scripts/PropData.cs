@@ -1,14 +1,16 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PickupItemData", menuName = "Survivors/Prop Data", order = 1)]
-public class PropData : MonoBehaviour
+[CreateAssetMenu(fileName = "PickupItemData", menuName = "💀 Survivors/Prop Data", order = 1)]
+public class PropData : ScriptableObject
 {
     public string InternalName;
 
-    [Space]
+    [Header("For UI and Description")]
     public string ItemName;
     public string Description;
 
-    [Space]
+    [Header("For Gameplay")]
+    public PropType Type;
     public Sprite Icon;
+    public int Value;
 }

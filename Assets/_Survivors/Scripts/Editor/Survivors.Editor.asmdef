@@ -1,0 +1,16 @@
+{
+    "name": "Survivors.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c606e60c0f8f66d4ea959c9e8e3c9435"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

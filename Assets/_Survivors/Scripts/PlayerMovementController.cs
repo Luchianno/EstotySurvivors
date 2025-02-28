@@ -1,16 +1,25 @@
 using UnityEngine;
+using Zenject;
 
 public class PlayerMovementController : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public Vector2 MovementSpeed;
 
-    // Update is called once per frame
-    void Update()
+    Animator animator;
+
+    [Inject] IPlayerInput playerInput;
+
+    public void Tick()
     {
-        
+        this.transform.position += new Vector3(playerInput.MovementInput.x * MovementSpeed.x, playerInput.MovementInput.y * MovementSpeed.y, 0);
+
+        if (playerInput.MovementInput.magnitude > 0.1f)
+        {
+            // animator.SetBool("Speed", 1);
+        }
+        else
+        {
+            // animator.SetFloat("Speed", 0);
+        }
     }
 }

@@ -1,16 +1,9 @@
 using UnityEngine;
+using Zenject;
 
-public class ProjectInstaller : MonoBehaviour
+public class ProjectInstaller : MonoInstaller
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public override void InstallBindings()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

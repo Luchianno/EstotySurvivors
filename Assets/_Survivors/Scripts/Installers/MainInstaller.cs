@@ -9,12 +9,13 @@ public class MainInstaller : MonoInstaller
     {
         if(Application.isEditor && !ForceOnScreenJoystick)
         {
-            Container.Bind<IPlayerInput>().To<PlayerInputKeyboard>().AsSingle();
+            Container.BindInterfacesAndSelfTo<PlayerInputKeyboard>().AsSingle();
         }
         else
         {
-            Container.Bind<IPlayerInput>().To<PlayerInputJoystick>().AsSingle();
+            Container.BindInterfacesAndSelfTo<PlayerInputJoystick>().AsSingle();
         }
 
+        
     }
 }

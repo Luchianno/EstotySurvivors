@@ -1,6 +1,7 @@
 using UnityEngine;
+using Zenject;
 
-public interface IPlayerInput
+public interface IPlayerInput: ITickable
 {
     Vector2 MovementInput { get; }
 }

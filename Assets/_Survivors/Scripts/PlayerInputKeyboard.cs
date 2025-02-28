@@ -1,10 +1,11 @@
 using UnityEngine;
+using Zenject;
 
-public class PlayerInputKeyboard : IPlayerInput
+public class PlayerInputKeyboard : ITickable, IPlayerInput
 {
     public Vector2 MovementInput { get; protected set; }
 
-    void Update()
+    public void Tick()
     {
         var input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         input = Vector2.ClampMagnitude(input, 1);

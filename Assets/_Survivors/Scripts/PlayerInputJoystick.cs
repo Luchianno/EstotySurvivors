@@ -5,7 +5,7 @@ public class PlayerInputJoystick : IPlayerInput
 {
     public Vector2 MovementInput { get; protected set; }
 
-    void Update()
+    public void Tick()
     {
         // get input from Simple Input System
         var input = new Vector2(SimpleInput.GetAxis("Horizontal"), SimpleInput.GetAxis("Vertical"));

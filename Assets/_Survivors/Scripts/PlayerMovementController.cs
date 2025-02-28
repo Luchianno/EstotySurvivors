@@ -3,23 +3,35 @@ using Zenject;
 
 public class PlayerMovementController : MonoBehaviour
 {
-    public Vector2 MovementSpeed;
+    public UpdateType UpdateWhen = UpdateType.Update;
+    public float MovementSpeed = 1f;
+    public float RunningAnimationThreshold = 0.1f;
 
-    Animator animator;
+    [SerializeField] Animator animator;
 
     [Inject] IPlayerInput playerInput;
 
     public void Tick()
     {
-        this.transform.position += new Vector3(playerInput.MovementInput.x * MovementSpeed.x, playerInput.MovementInput.y * MovementSpeed.y, 0);
+        this.transform.position += new Vector3(playerInput.MovementInput.x, playerInput.MovementInput.y, 0) * (MovementSpeed * Time.deltaTime);
 
-        if (playerInput.MovementInput.magnitude > 0.1f)
+        animator.SetBool("IsRunning", playerInput.MovementInput.sqrMagnitude >= RunningAnimationThreshold * RunningAnimationThreshold);
+
+        if(playerInput.MovementInput.x != 0)
         {
-            // animator.SetBool("Speed", 1);
+            this.transform.localScale = new Vector3(Mathf.Sign(playerInput.MovementInput.x), 1, 1);
         }
-        else
-        {
-            // animator.SetFloat("Speed", 0);
-        }
+    }
+
+    void Update()
+    {
+        if (UpdateWhen == UpdateType.Update)
+            Tick();
+    }
+
+    public enum UpdateType
+    {
+        Manual,
+        Update,
     }
 }

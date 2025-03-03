@@ -15,10 +15,12 @@ MonoBehaviour:
   InternalName: Fast Skeleton
   EnemyName: Slow Zombie
   Description: 
-  EnemySize: 1
+  EnemySizeMin: 1
+  EnemySizeMax: 1
   SpeedMin: 8
   SpeedMax: 10
-  MaxHealth: 0
+  HealthMin: 10
+  HealthMax: 10
   ContactDamageMin: 10
   ContactDamageMax: 10
-  Animator: {fileID: 22100000, guid: 12cfc8b2360c2fc4499d4f6f6607671a, type: 2}
+  AnimatorController: {fileID: 22100000, guid: 12cfc8b2360c2fc4499d4f6f6607671a, type: 2}

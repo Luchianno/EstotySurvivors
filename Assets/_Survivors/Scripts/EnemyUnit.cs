@@ -1,30 +1,58 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
-public class EnemyUnit : MonoBehaviour
+public class EnemyUnit : MonoBehaviour, IPoolable<Vector3, EnemyData, IMemoryPool>, IDisposable
 {
-    [field: SerializeField] 
+    [field: SerializeField]
+    public EnemyStats Stats { get; protected set; }
+    [field: SerializeField]
     public EnemyData Data { get; protected set; }
 
-    [SerializeField] UnitHealth unitHealth;
+    [field: SerializeField]
+    public UnitHealth Health { get; protected set; }
 
-    public void ResetState(Vector3 position, EnemyData data)
+    [SerializeField] Animator animator;
+
+    List<IResetState> resetables;
+
+    IMemoryPool pool;
+
+    public void OnSpawned(Vector3 position, EnemyData data, IMemoryPool pool)
     {
+        this.pool = pool;
         this.Data = data;
 
+        // Data has random values, so we need to create a new instance of EnemyStats
+        // which will be used to store the actual stats of the enemy
+        Stats = new EnemyStats(Data); 
+
         transform.position = position;
-        this.transform.localScale = Vector3.one* Data.EnemySize;
+        transform.localScale = Vector3.one * Data.EnemySizeMin;
 
-        unitHealth.ResetState(Data.MaxHealth);
-    }
+        Health.Max = Stats.MaxHealth;
+        animator.runtimeAnimatorController = Data.AnimatorController;
 
-    public class Pool : MonoMemoryPool<Vector3, EnemyData, EnemyUnit>
-    {
-        protected override void Reinitialize(Vector3 position,  EnemyData data, EnemyUnit unit)
+
+        if (resetables == null)
+            resetables = GetComponentsInChildren<IResetState>().ToList();
+
+        foreach (var resetable in resetables)
         {
-            unit.Data = data;
-            unit.ResetState(position, data);
+            resetable.ResetState();
         }
     }
+
+    public void OnDespawned() { }
+
+    public void Dispose()
+    {
+        Data = null;
+        pool = null;
+    }
+
+    public class Factory : PlaceholderFactory<Vector3, EnemyData, EnemyUnit> { }
 
 }

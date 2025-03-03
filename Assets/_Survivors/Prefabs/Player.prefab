@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94cfdb39e6745224e9e5c2027bd2e06e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minRadius: 12
+  minRadius: 13
   maxRadius: 20
 --- !u!1 &2106904504968791653
 GameObject:

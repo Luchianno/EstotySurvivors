@@ -5,8 +5,9 @@ public class MainInstaller : MonoInstaller
 {
     public bool ForceOnScreenJoystick = false;
 
-    [SerializeField] GameObject fastEnemyPrefab;
-    [SerializeField] GameObject slowEnemyPrefab;
+    [SerializeField] GameObject enemyPrefab;
+
+    [SerializeField] GameObject textPopupPrefab;
 
     public override void InstallBindings()
     {
@@ -19,12 +20,28 @@ public class MainInstaller : MonoInstaller
             Container.BindInterfacesAndSelfTo<PlayerInputJoystick>().AsSingle();
         }
 
+        // find player game object and bind it
+        var player = GameObject.FindGameObjectWithTag("Player");
+        Container.Bind<Transform>().WithId("Player").FromInstance(player.transform).AsSingle();
+
         // enemy pool
-        Container.BindMemoryPool<EnemyUnit, EnemyUnit.Pool>()
-            .WithInitialSize(20)
-            .FromComponentInNewPrefab(fastEnemyPrefab)
-            .UnderTransformGroup("Enemies");
+        Container.BindFactory<Vector3, EnemyData, EnemyUnit, EnemyUnit.Factory>()
+            .FromMonoPoolableMemoryPool(x =>
+                x.WithInitialSize(10)
+                .FromComponentInNewPrefab(enemyPrefab)
+                .UnderTransformGroup("Enemies")
+            );
 
         Container.Bind<EnemySpawningArea>().FromComponentInHierarchy(true).AsSingle();
+        Container.Bind<EnemySpawner>().FromComponentInHierarchy(true).AsSingle();
+
+        // UI 
+        // enemy damage popup pool
+        Container.BindFactory<string, Color, Vector3, TextPopup, TextPopup.Factory>()
+            .FromMonoPoolableMemoryPool(x =>
+                x.WithInitialSize(10)
+                .FromComponentInNewPrefab(textPopupPrefab)
+                .UnderTransformGroup("EnemyDamagePopups")
+            );
     }
 }

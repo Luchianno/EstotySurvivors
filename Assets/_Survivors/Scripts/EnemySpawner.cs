@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
 using Zenject;
@@ -9,13 +10,15 @@ using Random = UnityEngine.Random;
 // Spawn enemies individually and by waves as well
 public class EnemySpawner : MonoBehaviour
 {
+    public ReadOnlyCollection<EnemyUnit> Enemies => enemies.AsReadOnly();
+    
     List<EnemyUnit> enemies = new List<EnemyUnit>();
 
     [SerializeField] List<WeightPair> enemyTypes;
 
     // enemy object pools:
     [Inject] EnemySpawningArea spawningArea;
-    [Inject] EnemyUnit.Pool enemyPool;
+    [Inject] EnemyUnit.Factory enemyFactory;
 
     // cache WaitForSeconds to avoid creating extra garbage
     WaitForSeconds waitASecond = new WaitForSeconds(1f);
@@ -53,7 +56,7 @@ public class EnemySpawner : MonoBehaviour
         var selectedEnemy = GetRandomEnemyType();
 
         var positionCenter = spawningArea.GetRandomPosition();
-        var unit = enemyPool.Spawn(positionCenter, selectedEnemy);
+        var unit = enemyFactory.Create(positionCenter, selectedEnemy);
 
         enemies.Add(unit);
     }
@@ -69,7 +72,7 @@ public class EnemySpawner : MonoBehaviour
             var positionCenter = spawningArea.GetRandomPosition();
             var randomDirection2D = Random.insideUnitCircle.normalized;
             var positionWithNoise = positionCenter + randomDirection2D;
-            var enemy = enemyPool.Spawn(positionWithNoise, enemyType);
+            var enemy = enemyFactory.Create(positionWithNoise, enemyType);
 
             enemies.Add(enemy);
         }

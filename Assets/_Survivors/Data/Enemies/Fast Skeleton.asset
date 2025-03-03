@@ -15,10 +15,12 @@ MonoBehaviour:
   InternalName: Fast Skeleton
   EnemyName: Fast Skeleton
   Description: 
-  EnemySize: 1
+  EnemySizeMin: 1
+  EnemySizeMax: 1
   SpeedMin: 15
   SpeedMax: 20
-  MaxHealth: 0
+  HealthMin: 10
+  HealthMax: 10
   ContactDamageMin: 10
   ContactDamageMax: 10
-  Animator: {fileID: 22100000, guid: 8d1d920724ffb8a409ce0e458dc4b7a9, type: 2}
+  AnimatorController: {fileID: 22100000, guid: 8d1d920724ffb8a409ce0e458dc4b7a9, type: 2}

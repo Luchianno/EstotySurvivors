@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a46d1616d74ca344789eccae3f72c24e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <IsInvisible>k__BackingField: 0
+  <IsInvinsible>k__BackingField: 0
   <Current>k__BackingField: 0
   <Max>k__BackingField: 0
   OnHealthChanged:
@@ -146,8 +146,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 074e55bcb03fc0e4d9034d3f03d686f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Data>k__BackingField: {fileID: 0}
-  unitHealth: {fileID: 4973264024802899736}
+  <Data>k__BackingField: {fileID: 11400000, guid: b47693058bf9a3f4aae4103ea0717978, type: 2}
+  <Health>k__BackingField: {fileID: 4973264024802899736}
+  animator: {fileID: 3551877275939195094}
 --- !u!1 &5363632284654506148
 GameObject:
   m_ObjectHideFlags: 0

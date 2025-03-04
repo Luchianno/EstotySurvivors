@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "AppSettings", menuName = "💀 Survivors/AppSettings")]
 public class AppSettings : ScriptableObject
 {
     const string MusicVolumePreference = "MusicVolume";

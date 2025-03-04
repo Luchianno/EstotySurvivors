@@ -5,8 +5,10 @@ public class MainInstaller : MonoInstaller
 {
     public bool ForceOnScreenJoystick = false;
 
+    [SerializeField] AppSettings appSettings;
+    [Space]
     [SerializeField] GameObject enemyPrefab;
-
+    [SerializeField] GameObject bulletPrefab;
     [SerializeField] GameObject textPopupPrefab;
 
     public override void InstallBindings()
@@ -20,6 +22,15 @@ public class MainInstaller : MonoInstaller
             Container.BindInterfacesAndSelfTo<PlayerInputJoystick>().AsSingle();
         }
 
+        // app settings
+        Container.Bind<AppSettings>().FromInstance(Instantiate(appSettings)).AsSingle();
+
+        // signals
+        Container.DeclareSignal<PlayerDeathSignal>();
+        Container.DeclareSignal<PlayerDamageSignal>();
+        Container.DeclareSignal<PlayerLevelUpSignal>();
+        Container.DeclareSignal<PlaySfxSignal>();
+
         // find player game object and bind it
         var player = GameObject.FindGameObjectWithTag("Player");
         Container.Bind<Transform>().WithId("Player").FromInstance(player.transform).AsSingle();
@@ -32,16 +43,24 @@ public class MainInstaller : MonoInstaller
                 .UnderTransformGroup("Enemies")
             );
 
+        // bullet factory
+        Container.BindFactory<Vector3, Vector3, BulletData, SimpleBulletBehaviour, SimpleBulletBehaviour.Factory>()
+            .FromMonoPoolableMemoryPool(x =>
+                x.WithInitialSize(10)
+                .FromComponentInNewPrefab(bulletPrefab)
+                .UnderTransformGroup("Bullets")
+            );
+
         Container.Bind<EnemySpawningArea>().FromComponentInHierarchy(true).AsSingle();
         Container.Bind<EnemySpawner>().FromComponentInHierarchy(true).AsSingle();
 
         // UI 
-        // enemy damage popup pool
+        // text popup pool
         Container.BindFactory<string, Color, Vector3, TextPopup, TextPopup.Factory>()
             .FromMonoPoolableMemoryPool(x =>
                 x.WithInitialSize(10)
                 .FromComponentInNewPrefab(textPopupPrefab)
-                .UnderTransformGroup("EnemyDamagePopups")
+                .UnderTransformGroup("TextPopups")
             );
     }
 }

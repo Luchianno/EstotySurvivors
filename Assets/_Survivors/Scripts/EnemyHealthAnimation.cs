@@ -13,13 +13,16 @@ public class EnemyHealthAnimation : MonoBehaviour
         if (animator == null)
             animator = GetComponent<Animator>();
 
-        health.OnHealthChanged.AddListener(OnHealthChanged);
+        health.OnHealthChange.AddListener(OnHealthChanged);
         health.OnDying.AddListener(OnDying);
     }
 
-    void OnHealthChanged(int current)
+    void OnHealthChanged(HealthChange change)
     {
-        animator.SetTrigger("Hit");
+        if (change.Amount < 0)
+        {
+            animator.SetTrigger("Hit");
+        }
     }
 
     void OnDying(GameObject gameObject)

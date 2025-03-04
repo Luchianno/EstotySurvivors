@@ -1,44 +1,74 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using Zenject;
 
-public class SimpleBulletBehaviour : MonoBehaviour
+public class SimpleBulletBehaviour : MonoBehaviour, IPoolable<Vector3, Vector3, BulletData, IMemoryPool>, IDisposable
 {
+    [field: SerializeField]
     public BulletData Data { get; protected set; }
 
-    [SerializeField] new Rigidbody2D rigidbody2D;
+    [SerializeField] Rigidbody2D body;
     [SerializeField] SpriteRenderer spriteRenderer;
 
-    public void Initialize(Vector3 position, Vector3 direction, BulletData data)
+    IMemoryPool pool;
+
+    public void OnSpawned(Vector3 position, Vector3 rotation, BulletData data, IMemoryPool pool)
     {
-        transform.position = position;
-        transform.forward = direction;
+        this.pool = pool;
         Data = data;
+
+        transform.position = position;
+        transform.rotation = Quaternion.Euler(rotation);
 
         spriteRenderer.sprite = data.Icon;
 
-        rigidbody2D.linearVelocity = direction * data.Speed;
+        body.linearVelocity = transform.up * data.Speed;
 
         StartCoroutine(DestroyAfter(data.LifeTime));
 
         IEnumerator DestroyAfter(float time)
         {
             yield return new WaitForSeconds(time);
-            OnDespawn();
+            Dispose();
         }
     }
 
-    void OnDespawn()
+    public void OnDespawned()
     {
-        
+        pool = null;
     }
 
-    // memory pool 
-    public class Pool : MonoMemoryPool<Vector3, Vector3, BulletData, SimpleBulletBehaviour>
+    public void Dispose()
     {
-        protected override void Reinitialize(Vector3 position, Vector3 direction, BulletData data, SimpleBulletBehaviour bullet)
+        pool.Despawn(this);
+    }
+
+    protected virtual void OnTriggerEnter2D(Collider2D other)
+    {
+        OnColliderEnter2D(other);
+    }
+
+    protected virtual void OnColliderEnter2D(Collider2D other)
+    {
+        var otherHealth = other.GetComponent<UnitHealth>();
+
+        if (otherHealth == null)
         {
-            bullet.Initialize(position, direction, data);
+            return;
         }
+
+        otherHealth.Damage(Data.GetDamage());
+
+        if (Data.IsPiercing)
+        {
+            return;
+        }
+
+        Dispose();
+    }
+
+    public class Factory : PlaceholderFactory<Vector3, Vector3, BulletData, SimpleBulletBehaviour>
+    {
     }
 }

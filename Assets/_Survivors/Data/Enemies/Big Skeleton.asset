@@ -17,8 +17,8 @@ MonoBehaviour:
   Description: 
   EnemySizeMin: 1
   EnemySizeMax: 1
-  SpeedMin: 8
-  SpeedMax: 10
+  SpeedMin: 1
+  SpeedMax: 2
   HealthMin: 50
   HealthMax: 50
   ContactDamageMin: 30

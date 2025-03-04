@@ -11,10 +11,10 @@ public class UnitHealth : MonoBehaviour, IResetState
     [field: SerializeField]
     public int Max { get; set; }
 
-    public UnityEvent<int> OnHealthChanged;
+    public UnityEvent<HealthChange> OnHealthChange;
     public UnityEvent<GameObject> OnDying;
 
-    public void Damage(int damage)
+    public void Damage(int damage, HealthChangeType type = HealthChangeType.Regular)
     {
         if (Current <= 0)
         {
@@ -29,7 +29,7 @@ public class UnitHealth : MonoBehaviour, IResetState
         Current -= damage;
         Current = Mathf.Max(0, Current);
 
-        OnHealthChanged.Invoke(Current);
+        OnHealthChange.Invoke(new HealthChange(damage, type));
 
         if (Current == 0)
         {

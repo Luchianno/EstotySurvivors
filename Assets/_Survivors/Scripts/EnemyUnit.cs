@@ -35,7 +35,6 @@ public class EnemyUnit : MonoBehaviour, IPoolable<Vector3, EnemyData, IMemoryPoo
         Health.Max = Stats.MaxHealth;
         animator.runtimeAnimatorController = Data.AnimatorController;
 
-
         if (resetables == null)
             resetables = GetComponentsInChildren<IResetState>().ToList();
 
@@ -49,7 +48,6 @@ public class EnemyUnit : MonoBehaviour, IPoolable<Vector3, EnemyData, IMemoryPoo
 
     public void Dispose()
     {
-        Data = null;
         pool = null;
     }
 

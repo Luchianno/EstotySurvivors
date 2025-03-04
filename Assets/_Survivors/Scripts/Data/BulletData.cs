@@ -1,15 +1,23 @@
 using UnityEngine;
 
-public class BulletData : MonoBehaviour
+[CreateAssetMenu(fileName = "BulletData", menuName = "💀 Survivors/Bullet Data")]
+public class BulletData : ScriptableObject
 {
     public string InternalName;
 
     public string DisplayName;
+    [TextArea]
     public string Description;
 
     [Header("Stats")]
     [Min(1)]
-    public int Damage = 2;
+    public int DamageMin = 2;
+    [Min(1)]
+    public int DamageMax = 5;
+    [Range(0, 1)]
+    public float CriticalChance = 0.01f;
+    [Range(1, 10)]
+    public float CriticalMultiplier = 2f;
     [Min(0)]
     public float Speed = 10f;
     [Min(0)]
@@ -20,10 +28,26 @@ public class BulletData : MonoBehaviour
     [Space]
     public Sprite Icon;
     [Space]
+    [Header("Explosion Mechanics Not Implemented")]
     public ExplositonData ExplosionData;
+
+    public int GetDamage()
+    {
+        int damage = Random.Range(DamageMin, DamageMax + 1);
+
+        if (Random.value < CriticalChance)
+        {
+            damage = (int)(damage * CriticalMultiplier);
+        }
+
+        return damage;
+    }
 
     void OValidate()
     {
-         
+        if (DamageMin > DamageMax)
+        {
+            DamageMin = DamageMax;
+        }
     }
 }

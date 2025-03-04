@@ -6,15 +6,18 @@ using Zenject;
 
 public class PlayerWeapon : MonoBehaviour
 {
-    [SerializeField] Transform firePoint;
-    [SerializeField] Transform weaponSprite;
+    public bool HasTarget => Target != null;
+
+    [field: SerializeField]
+    public Transform Target { get; protected set; }
 
     [field: SerializeField]
     public WeaponData Data { get; protected set; }
 
+    [SerializeField] Transform firePoint;
+    [SerializeField] Transform weaponSprite;
     [SerializeField] LayerMask enemyLayer;
 
-    [SerializeField] Transform target;
     [SerializeField] bool forceDisableAutoAim; // for debugging purposes
 
     [Inject] SimpleBulletBehaviour.Factory bulletFactory;
@@ -24,7 +27,7 @@ public class PlayerWeapon : MonoBehaviour
 
     void Update()
     {
-        target = FindClosestTarget();
+        Target = FindClosestTarget();
         RotateWeapon();
         TryShootTarget();
     }
@@ -51,6 +54,12 @@ public class PlayerWeapon : MonoBehaviour
 
             if (sqrMagnitude < closestSqrMagnitude)
             {
+                var health = enemy.GetComponent<UnitHealth>();
+                if (health != null && !health.IsAlive)
+                {
+                    continue;
+                }
+
                 closestSqrMagnitude = sqrMagnitude;
                 closestTarget = enemy.transform;
             }
@@ -61,20 +70,22 @@ public class PlayerWeapon : MonoBehaviour
 
     void RotateWeapon()
     {
-        if (target == null)
+        if (Target == null)
         {
             weaponSprite.DOLocalRotate(Vector3.zero, 0.3f);
             return;
         }
 
-        Vector2 direction = target.position - weaponSprite.position;
+        // snap 2d sprite of weapon so that it points towards the target
+        Vector2 direction = Target.position - transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        weaponSprite.Rotate(Vector3.forward, angle);
+
+        weaponSprite.DOLocalRotate(new Vector3(0, 0, angle), 0.3f);
     }
 
     void TryShootTarget()
     {
-        if (target == null)
+        if (Target == null)
         {
             return;
         }

@@ -6,6 +6,8 @@ using Zenject;
 
 public class EnemyUnit : MonoBehaviour, IPoolable<Vector3, EnemyData, IMemoryPool>, IDisposable
 {
+    public bool IsAlive => (Health != null) && Health.IsAlive;
+
     [field: SerializeField]
     public EnemyStats Stats { get; protected set; }
     [field: SerializeField]
@@ -27,7 +29,7 @@ public class EnemyUnit : MonoBehaviour, IPoolable<Vector3, EnemyData, IMemoryPoo
 
         // Data has random values, so we need to create a new instance of EnemyStats
         // which will be used to store the actual stats of the enemy
-        Stats = new EnemyStats(Data); 
+        Stats = new EnemyStats(Data);
 
         transform.position = position;
         transform.localScale = Vector3.one * Data.EnemySizeMin;

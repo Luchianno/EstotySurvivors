@@ -12,7 +12,7 @@ public class UnitHealth : MonoBehaviour, IResetState
     public int Max { get; set; }
 
     public UnityEvent<HealthChange> OnHealthChange;
-    public UnityEvent<GameObject> OnDying;
+    public UnityEvent<GameObject> OnDyingEvent;
 
     public void Damage(int damage, HealthChangeType type = HealthChangeType.Regular)
     {
@@ -33,8 +33,13 @@ public class UnitHealth : MonoBehaviour, IResetState
 
         if (Current == 0)
         {
-            OnDying.Invoke(gameObject);
+            OnDying();
         }
+    }
+
+    protected virtual void OnDying()
+    {
+        OnDyingEvent.Invoke(gameObject);
     }
 
     public void ResetState()

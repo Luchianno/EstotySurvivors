@@ -31,16 +31,19 @@ public class BulletData : ScriptableObject
     [Header("Explosion Mechanics Not Implemented")]
     public ExplositonData ExplosionData;
 
-    public int GetDamage()
+    // returns absolute amount of health change, so it should be negative
+    public HealthChange GetDamage()
     {
         int damage = Random.Range(DamageMin, DamageMax + 1);
+        var healthChangeType = HealthChangeType.Normal;
 
         if (Random.value < CriticalChance)
         {
             damage = (int)(damage * CriticalMultiplier);
+            healthChangeType = HealthChangeType.Critical;
         }
 
-        return damage;
+        return new HealthChange(-damage, healthChangeType);
     }
 
     void OValidate()

@@ -25,11 +25,16 @@ public class MainInstaller : MonoInstaller
         // app settings
         Container.Bind<AppSettings>().FromInstance(Instantiate(appSettings)).AsSingle();
 
-        // signals
+        // * Signals *
+        // player signals
         Container.DeclareSignal<PlayerDeathSignal>();
         Container.DeclareSignal<PlayerDamageSignal>();
         Container.DeclareSignal<PlayerLevelUpSignal>();
         Container.DeclareSignal<PlaySfxSignal>();
+
+        // enemy signals
+        Container.DeclareSignal<EnemyDamageSignal>().OptionalSubscriber();
+        Container.DeclareSignal<EnemyDeathSignal>().OptionalSubscriber();
 
         // find player game object and bind it
         var player = GameObject.FindGameObjectWithTag("Player");
@@ -44,7 +49,7 @@ public class MainInstaller : MonoInstaller
             );
 
         // bullet factory
-        Container.BindFactory<Vector3, Vector3, BulletData, SimpleBulletBehaviour, SimpleBulletBehaviour.Factory>()
+        Container.BindFactory<Vector2, Vector2, BulletData, SimpleBulletBehaviour, SimpleBulletBehaviour.Factory>()
             .FromMonoPoolableMemoryPool(x =>
                 x.WithInitialSize(10)
                 .FromComponentInNewPrefab(bulletPrefab)

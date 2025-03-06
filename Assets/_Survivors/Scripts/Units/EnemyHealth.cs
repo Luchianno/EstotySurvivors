@@ -1,15 +1,17 @@
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Events;
+using Zenject;
 
-[RequireComponent(typeof(UnitHealth))]
-public class EnemyHealth : MonoBehaviour
+public class EnemyHealth : UnitHealth
 {
     [SerializeField] float deathStoneDuration = 5f;
     [SerializeField] EnemyUnit enemyUnit;
-    [SerializeField] UnitHealth health;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] Animator animator;
+
+    [Inject] SignalBus signalBus;
 
     WaitForSeconds waitForDeathStone;
 
@@ -17,28 +19,32 @@ public class EnemyHealth : MonoBehaviour
     {
         if (enemyUnit == null)
             enemyUnit = GetComponent<EnemyUnit>();
-        if (health == null)
-            health = GetComponent<UnitHealth>();
         if (animator == null)
             animator = GetComponent<Animator>();
-
-        health.OnHealthChange.AddListener(OnHealthChanged);
-        health.OnDyingEvent.AddListener(OnDying);
 
         waitForDeathStone = new WaitForSeconds(deathStoneDuration);
     }
 
-    void OnHealthChanged(HealthChange change)
+
+    protected override void OnHeatlhChange(HealthChange change)
     {
+        base.OnHeatlhChange(change);
+
         if (change.Amount < 0)
         {
             animator.SetTrigger("Hit");
+            
+            signalBus.Fire(new EnemyDamageSignal(enemyUnit, change));
         }
     }
 
-    void OnDying(GameObject gameObject)
+    protected override void OnDying()
     {
+        base.OnDying();
+
         animator.SetBool("Dead", true);
+        
+        signalBus.Fire(new EnemyDeathSignal(enemyUnit));
 
         spriteRenderer.DOFade(0, deathStoneDuration).OnComplete(() =>
         {

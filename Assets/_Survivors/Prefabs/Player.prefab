@@ -351,6 +351,7 @@ GameObject:
   - component: {fileID: 6383299360678705613}
   - component: {fileID: 2306233419783903431}
   - component: {fileID: 3537780526566500372}
+  - component: {fileID: 4233275958854377417}
   - component: {fileID: 5593334837714150053}
   - component: {fileID: 3534225561954471412}
   - component: {fileID: 4210260229652975014}
@@ -493,6 +494,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4233275958854377417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7713493115931330554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a0a88aed2fb6a1439cf39b79153672a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerWeapon: {fileID: 5593334837714150053}
 --- !u!114 &5593334837714150053
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -505,14 +519,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32a1e6282832b4e44a60ed6532480b41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DisableAutoTargetSelection: 0
+  Target: {fileID: 0}
+  <WeaponData>k__BackingField: {fileID: 11400000, guid: 23248eb23c8abad45a00ffdbdbf9b397, type: 2}
   firePoint: {fileID: 6268316258851589063}
-  weaponSprite: {fileID: 6805798127336109753}
-  <Data>k__BackingField: {fileID: 11400000, guid: 23248eb23c8abad45a00ffdbdbf9b397, type: 2}
+  weaponSprite: {fileID: 7275864281423516695}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
-  target: {fileID: 0}
-  forceDisableAutoAim: 0
 --- !u!114 &3534225561954471412
 MonoBehaviour:
   m_ObjectHideFlags: 0

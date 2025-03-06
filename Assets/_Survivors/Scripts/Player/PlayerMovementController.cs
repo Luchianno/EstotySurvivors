@@ -16,11 +16,6 @@ public class PlayerMovementController : MonoBehaviour
         this.transform.position += new Vector3(playerInput.MovementInput.x, playerInput.MovementInput.y, 0) * (MovementSpeed * Time.deltaTime);
 
         animator.SetBool("IsRunning", playerInput.MovementInput.sqrMagnitude >= RunningAnimationThreshold * RunningAnimationThreshold);
-
-        if(playerInput.MovementInput.x != 0)
-        {
-            this.transform.localScale = new Vector3(Mathf.Sign(playerInput.MovementInput.x), 1, 1);
-        }
     }
 
     void Update()

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using Zenject;
 
 public class EnemyUnit : MonoBehaviour, IPoolable<Vector3, EnemyData, IMemoryPool>, IDisposable
@@ -14,13 +15,13 @@ public class EnemyUnit : MonoBehaviour, IPoolable<Vector3, EnemyData, IMemoryPoo
     public EnemyData Data { get; protected set; }
 
     [field: SerializeField]
-    public UnitHealth Health { get; protected set; }
+    public EnemyHealth Health { get; protected set; }
 
     [SerializeField] Animator animator;
 
-    List<IResetState> resetables;
-
     IMemoryPool pool;
+    // List of all components that we automatically reset when the enemy is spawned
+    List<IResetState> resetables;
 
     public void OnSpawned(Vector3 position, EnemyData data, IMemoryPool pool)
     {

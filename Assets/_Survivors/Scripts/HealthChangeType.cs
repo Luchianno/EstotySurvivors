@@ -2,6 +2,6 @@ using UnityEngine;
 
 public enum HealthChangeType
 {
-    Regular,
+    Normal,
     Critical,
 }

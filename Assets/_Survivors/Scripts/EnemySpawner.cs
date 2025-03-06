@@ -10,9 +10,9 @@ using Random = UnityEngine.Random;
 // Spawn enemies individually and by waves as well
 public class EnemySpawner : MonoBehaviour
 {
-    public ReadOnlyCollection<EnemyUnit> Enemies => enemies.AsReadOnly();
-    
-    List<EnemyUnit> enemies = new List<EnemyUnit>();
+    public HashSet<EnemyUnit> Enemies => enemies;
+
+    HashSet<EnemyUnit> enemies = new HashSet<EnemyUnit>();
 
     [SerializeField] List<WeightPair> enemyTypes;
 
@@ -24,6 +24,8 @@ public class EnemySpawner : MonoBehaviour
     WaitForSeconds waitASecond = new WaitForSeconds(1f);
     Coroutine updateRoutine;
     List<float> cumulativeWeights = new List<float>();
+
+    [Inject] SignalBus signalBus;
 
     void Awake()
     {
@@ -38,11 +40,15 @@ public class EnemySpawner : MonoBehaviour
     void OnEnable()
     {
         updateRoutine = StartCoroutine(UpdateRoutine());
+
+        signalBus.Subscribe<EnemyDeathSignal>(OnEnemyDeath);
     }
 
     void OnDisable()
     {
         StopCoroutine(updateRoutine);
+
+        signalBus.Unsubscribe<EnemyDeathSignal>(OnEnemyDeath);
     }
 
 
@@ -51,12 +57,11 @@ public class EnemySpawner : MonoBehaviour
         return enemies.Count < 10;
     }
 
-    public void SpawnIndividualEnemy()
-    {
-        var selectedEnemy = GetRandomEnemyType();
+    public void SpawnIndividualEnemy() => SpawnIndividualEnemy(GetRandomEnemyType(), spawningArea.GetRandomPosition());
 
-        var positionCenter = spawningArea.GetRandomPosition();
-        var unit = enemyFactory.Create(positionCenter, selectedEnemy);
+    public void SpawnIndividualEnemy(EnemyData enemyData, Vector3 position)
+    {
+        var unit = enemyFactory.Create(position, enemyData);
 
         enemies.Add(unit);
     }
@@ -90,6 +95,11 @@ public class EnemySpawner : MonoBehaviour
         }
 
         return enemyTypes[selectedIndex].Data;
+    }
+
+    void OnEnemyDeath(EnemyDeathSignal signal)
+    {
+        enemies.Remove(signal.EnemyUnit);
     }
 
     IEnumerator UpdateRoutine()

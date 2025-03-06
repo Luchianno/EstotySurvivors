@@ -7,18 +7,20 @@ using Zenject;
 public class PlayerWeapon : MonoBehaviour
 {
     public bool HasTarget => Target != null;
+    public bool IsPlayerFlipped => transform.localScale.x < 0;
+
+    [Header("If ticked,\ntarget can be assigned manually for testing")]
+    public bool DisableAutoTargetSelection; // for debugging purposes
+    public Transform Target;
 
     [field: SerializeField]
-    public Transform Target { get; protected set; }
+    public WeaponData WeaponData { get; protected set; }
 
-    [field: SerializeField]
-    public WeaponData Data { get; protected set; }
-
+    [Space]
     [SerializeField] Transform firePoint;
-    [SerializeField] Transform weaponSprite;
+    [SerializeField] SpriteRenderer weaponSprite;
     [SerializeField] LayerMask enemyLayer;
 
-    [SerializeField] bool forceDisableAutoAim; // for debugging purposes
 
     [Inject] SimpleBulletBehaviour.Factory bulletFactory;
 
@@ -27,7 +29,8 @@ public class PlayerWeapon : MonoBehaviour
 
     void Update()
     {
-        Target = FindClosestTarget();
+        if (!DisableAutoTargetSelection)
+            Target = FindClosestTarget();
         RotateWeapon();
         TryShootTarget();
     }
@@ -35,7 +38,7 @@ public class PlayerWeapon : MonoBehaviour
     Transform FindClosestTarget()
     {
         // find enemies in weapon range
-        Physics2D.OverlapCircle(firePoint.position, Data.AutoAimRadius, new ContactFilter2D { layerMask = enemyLayer, useLayerMask = true }, closeEnemies);
+        Physics2D.OverlapCircle(firePoint.position, WeaponData.AutoAimRadius, new ContactFilter2D { layerMask = enemyLayer, useLayerMask = true }, closeEnemies);
 
         if (closeEnemies.Count == 0)
         {
@@ -72,15 +75,17 @@ public class PlayerWeapon : MonoBehaviour
     {
         if (Target == null)
         {
-            weaponSprite.DOLocalRotate(Vector3.zero, 0.3f);
+            weaponSprite.transform.DOLocalRotate(Vector3.zero, 0.15f);
             return;
         }
 
-        // snap 2d sprite of weapon so that it points towards the target
-        Vector2 direction = Target.position - transform.position;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        var direction = (Target.position - transform.position).normalized;
+        direction = IsPlayerFlipped ? -direction : direction;
 
-        weaponSprite.DOLocalRotate(new Vector3(0, 0, angle), 0.3f);
+        // rotate weapon towards the target
+        var foo = Vector2.MoveTowards(weaponSprite.transform.right, direction, 0.1f);
+
+        weaponSprite.transform.right = foo;
     }
 
     void TryShootTarget()
@@ -90,28 +95,41 @@ public class PlayerWeapon : MonoBehaviour
             return;
         }
 
-        if (timeSinceLastShot < Data.FireRate)
+        if (timeSinceLastShot < WeaponData.ShootInterval)
         {
-            Shoot();
+            timeSinceLastShot += Time.deltaTime;
+            return;
         }
 
+        Shoot();
     }
 
     public void Shoot()
     {
-        if (Data == null)
+        if (WeaponData == null)
         {
             return;
         }
 
-        var bullet = bulletFactory.Create(firePoint.position, weaponSprite.rotation.eulerAngles, Data.BulletData);
+        // shoot 2D bullets in the direction of the weapon
+        for (int i = 0; i < WeaponData.BulletsPerShot; i++)
+        {
+            var gunForward = weaponSprite.transform.right;
+            var spread = Random.Range(-WeaponData.SpreadDegrees / 2, WeaponData.SpreadDegrees / 2);
+            var direction = Quaternion.Euler(0, 0, spread) * gunForward;
 
+            direction = IsPlayerFlipped ? -direction : direction;
+
+            var bullet = bulletFactory.Create(firePoint.position, direction, WeaponData.BulletData);
+        }
+
+        timeSinceLastShot = 0;
     }
 
     void ChangeWeapon(WeaponData data)
     {
-        Data = data;
+        WeaponData = data;
 
-        weaponSprite.gameObject.SetActive(Data != null);
+        weaponSprite.gameObject.SetActive(WeaponData != null);
     }
 }

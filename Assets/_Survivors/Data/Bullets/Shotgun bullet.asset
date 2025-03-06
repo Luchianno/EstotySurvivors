@@ -15,13 +15,13 @@ MonoBehaviour:
   InternalName: Shotgun Slug
   DisplayName: Shotgun Slug
   Description: 
-  DamageMin: 2
-  DamageMax: 5
-  CriticalChance: 0.01
+  DamageMin: 1
+  DamageMax: 3
+  CriticalChance: 0.05
   CriticalMultiplier: 2
-  Speed: 10
-  LifeTime: 2
-  IsPiercing: 1
+  Speed: 30
+  LifeTime: 0.3
+  IsPiercing: 0
   IsExplosive: 0
   Icon: {fileID: 154122315, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
   ExplosionData: {fileID: 0}

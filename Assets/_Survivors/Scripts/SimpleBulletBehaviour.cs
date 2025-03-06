@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using Zenject;
 
-public class SimpleBulletBehaviour : MonoBehaviour, IPoolable<Vector3, Vector3, BulletData, IMemoryPool>, IDisposable
+public class SimpleBulletBehaviour : MonoBehaviour, IPoolable<Vector2, Vector2, BulletData, IMemoryPool>, IDisposable
 {
     [field: SerializeField]
     public BulletData Data { get; protected set; }
@@ -13,13 +13,13 @@ public class SimpleBulletBehaviour : MonoBehaviour, IPoolable<Vector3, Vector3, 
 
     IMemoryPool pool;
 
-    public void OnSpawned(Vector3 position, Vector3 rotation, BulletData data, IMemoryPool pool)
+    public void OnSpawned(Vector2 position, Vector2 direction, BulletData data, IMemoryPool pool)
     {
         this.pool = pool;
         Data = data;
 
         transform.position = position;
-        transform.rotation = Quaternion.Euler(rotation);
+        transform.rotation = Quaternion.Euler(0, 0, Vector2.SignedAngle(Vector2.up, direction));
 
         spriteRenderer.sprite = data.Icon;
 
@@ -36,7 +36,7 @@ public class SimpleBulletBehaviour : MonoBehaviour, IPoolable<Vector3, Vector3, 
 
     public void OnDespawned()
     {
-        pool = null;
+        Data = null;
     }
 
     public void Dispose()
@@ -58,7 +58,12 @@ public class SimpleBulletBehaviour : MonoBehaviour, IPoolable<Vector3, Vector3, 
             return;
         }
 
-        otherHealth.Damage(Data.GetDamage());
+        if(!otherHealth.IsAlive)
+        {
+            return;
+        }
+
+        otherHealth.ChangeBy(Data.GetDamage());
 
         if (Data.IsPiercing)
         {
@@ -68,7 +73,7 @@ public class SimpleBulletBehaviour : MonoBehaviour, IPoolable<Vector3, Vector3, 
         Dispose();
     }
 
-    public class Factory : PlaceholderFactory<Vector3, Vector3, BulletData, SimpleBulletBehaviour>
+    public class Factory : PlaceholderFactory<Vector2, Vector2, BulletData, SimpleBulletBehaviour>
     {
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine.Events;
 public class UnitHealth : MonoBehaviour, IResetState
 {
     public bool IsAlive => Current > 0;
+
     [field: SerializeField]
     public bool IsInvinsible { get; set; }
     [field: SerializeField]
@@ -11,12 +12,12 @@ public class UnitHealth : MonoBehaviour, IResetState
     [field: SerializeField]
     public int Max { get; set; }
 
-    public UnityEvent<HealthChange> OnHealthChange;
+    public UnityEvent<HealthChange> OnHealthChangeEvent;
     public UnityEvent<GameObject> OnDyingEvent;
 
-    public void Damage(int damage, HealthChangeType type = HealthChangeType.Regular)
+    public void ChangeBy(HealthChange delta)
     {
-        if (Current <= 0)
+        if (!IsAlive || delta.Amount == 0)
         {
             return;
         }
@@ -26,10 +27,10 @@ public class UnitHealth : MonoBehaviour, IResetState
             return;
         }
 
-        Current -= damage;
-        Current = Mathf.Max(0, Current);
+        Current += delta.Amount;
+        Current = Mathf.Clamp(Current, 0, Max);
 
-        OnHealthChange.Invoke(new HealthChange(damage, type));
+        OnHeatlhChange(delta);
 
         if (Current == 0)
         {
@@ -37,12 +38,17 @@ public class UnitHealth : MonoBehaviour, IResetState
         }
     }
 
+    protected virtual void OnHeatlhChange(HealthChange change)
+    {
+        OnHealthChangeEvent.Invoke(change);
+    }
+
     protected virtual void OnDying()
     {
         OnDyingEvent.Invoke(gameObject);
     }
 
-    public void ResetState()
+    public virtual void ResetState()
     {
         Current = Max;
     }

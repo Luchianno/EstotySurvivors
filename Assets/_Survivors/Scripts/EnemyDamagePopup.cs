@@ -11,11 +11,14 @@ public class EnemyDamagePopup : MonoBehaviour
 
     void Awake()
     {
-        GetComponent<UnitHealth>().OnHealthChange.AddListener(OnHealthChanged);
+        GetComponent<UnitHealth>().OnHealthChangeEvent.AddListener(OnHealthChanged);
     }
 
     void OnHealthChanged(HealthChange healthChange)
     {
-        
+        if (healthChange.Amount < 0)
+        {
+            var popup = textPopupFactory.Create(healthChange.Amount.ToString(), damageColor, transform.position + Vector3.up);
+        }
     }
 }

@@ -16,11 +16,11 @@ MonoBehaviour:
   DisplayName: Shotgun
   Description: 
   AutoAimRadius: 4
-  FireRate: 1
+  ShootInterval: 0.7
   BulletsPerShot: 3
   SpreadDegrees: 15
   ReloadTime: 3
-  ClipSize: 7
-  MaxAmmo: 21
+  ClipSize: 100
+  MaxAmmo: 100
   Icon: {fileID: 1772703093, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
   BulletData: {fileID: 11400000, guid: 8721a54082012304a84c68aa10222335, type: 2}

@@ -6,12 +6,14 @@ public class WeaponData : ScriptableObject
     public string InternalName;
 
     public string DisplayName;
+    [TextArea]
     public string Description;
 
     [Header("Stats")]
     [Min(0)]
     public float AutoAimRadius;
-    public float FireRate;
+    [Min(0)]
+    public float ShootInterval = 1f;
     [Range(1, 100)]
     public int BulletsPerShot;
     [Tooltip("In degrees")]
@@ -33,7 +35,7 @@ public class WeaponData : ScriptableObject
     void OValidate()
     {
 
-        if(ClipSize > MaxAmmo)
+        if (ClipSize > MaxAmmo)
         {
             ClipSize = MaxAmmo;
         }

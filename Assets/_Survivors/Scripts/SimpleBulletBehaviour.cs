@@ -51,24 +51,20 @@ public class SimpleBulletBehaviour : MonoBehaviour, IPoolable<Vector2, Vector2, 
 
     protected virtual void OnColliderEnter2D(Collider2D other)
     {
+        if(!this.gameObject.activeSelf)
+            return;
+
         var otherHealth = other.GetComponent<UnitHealth>();
 
-        if (otherHealth == null)
-        {
+        if (otherHealth == null || !otherHealth.IsAlive)
             return;
-        }
-
-        if(!otherHealth.IsAlive)
-        {
-            return;
-        }
 
         otherHealth.ChangeBy(Data.GetDamage());
 
+        // keep flying through. 
+        // TODO maybe add max number of pierces
         if (Data.IsPiercing)
-        {
             return;
-        }
 
         Dispose();
     }

@@ -2,25 +2,31 @@ using UnityEngine;
 
 public struct PlayerDamageSignal
 {
-    public int Damage { get; }
+    public int Amount { get; }
+    public int CurrentHealth { get; }
+    public int MaxHealth { get; }
 
-    public PlayerDamageSignal(int damage)
+    public PlayerDamageSignal(int damage, int currentHealth, int maxHealth)
     {
-        Damage = damage;
+        if (damage < 0)
+        {
+            Debug.LogError("Damage amount cannot be negative");
+            damage = 0;
+        }
+
+        this.Amount = damage;
+        this.CurrentHealth = currentHealth;
+        this.MaxHealth = maxHealth;
     }
 
     public override string ToString()
     {
-        return $"PlayerDamageSignal: {Damage}";
+        return $"PlayerDamageSignal: {Amount}";
     }
 
     public static implicit operator int(PlayerDamageSignal signal)
     {
-        return signal.Damage;
+        return signal.Amount;
     }
 
-    public static implicit operator PlayerDamageSignal(int damage)
-    {
-        return new PlayerDamageSignal(damage);
-    }
 }

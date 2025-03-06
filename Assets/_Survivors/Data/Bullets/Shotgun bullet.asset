@@ -19,7 +19,7 @@ MonoBehaviour:
   DamageMax: 3
   CriticalChance: 0.05
   CriticalMultiplier: 2
-  Speed: 30
+  Speed: 15
   LifeTime: 0.3
   IsPiercing: 0
   IsExplosive: 0

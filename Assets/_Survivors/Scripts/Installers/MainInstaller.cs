@@ -29,12 +29,16 @@ public class MainInstaller : MonoInstaller
         // player signals
         Container.DeclareSignal<PlayerDeathSignal>();
         Container.DeclareSignal<PlayerDamageSignal>();
+        Container.DeclareSignal<PlayerHealSignal>();
         Container.DeclareSignal<PlayerLevelUpSignal>();
         Container.DeclareSignal<PlaySfxSignal>();
 
         // enemy signals
         Container.DeclareSignal<EnemyDamageSignal>().OptionalSubscriber();
         Container.DeclareSignal<EnemyDeathSignal>().OptionalSubscriber();
+
+        // stats signals
+        Container.DeclareSignal<ScoreChangedSignal>();
 
         // find player game object and bind it
         var player = GameObject.FindGameObjectWithTag("Player");

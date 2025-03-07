@@ -69,6 +69,10 @@ public class MainInstaller : MonoInstaller
                 .UnderTransformGroup("TextPopups")
             );
 
+        // UI screens
+        Container.Bind<LandingScreen>().FromComponentInHierarchy(true).AsSingle();
+        Container.Bind<DeathScreen>().FromComponentInHierarchy(true).AsSingle();
+        Container.Bind<WinScreen>().FromComponentInHierarchy(true).AsSingle();
 
         // * Signals *
         // player signals

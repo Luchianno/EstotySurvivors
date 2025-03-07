@@ -7,10 +7,10 @@ using Random = UnityEngine.Random;
 public class Level : ILevel
 {
     [SerializeField] int experienceRequired;
-    [SerializeField] List<WeightPair> EnemyProbability;
+    [SerializeField] List<EnemyWeightPair> EnemyProbability;
     [SerializeField] int MaxEnemies;
 
-    public List<WeightPair> GetEnemyProbability() => EnemyProbability;
+    public List<EnemyWeightPair> GetEnemyProbability() => EnemyProbability;
     public int GetMaxEnemies() => MaxEnemies;
 
     List<float> cumulativeWeights = new List<float>();
@@ -22,9 +22,10 @@ public class Level : ILevel
         float totalWeight = 0;
         foreach (var pair in EnemyProbability)
         {
-            totalWeight += pair.Weight;
             cumulativeWeights.Add(totalWeight);
         }
+
+        totalWeight = cumulativeWeights[^1];
     }
 
     public EnemyData GetRandomEnemyType()

@@ -565,9 +565,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2a96f8c4ce1d4445a146167cfa27601, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healingColor: {r: 0, g: 0, b: 0, a: 0}
-  healthBar: {fileID: 1171592657384515778}
-  xpBar: {fileID: 7099929468033447211}
+  healthAnimationDuration: 0.3
+  xpAnimationDuration: 0.3
+  healthBar: {fileID: 2812958287318920767}
+  xpBar: {fileID: 4829024688914814421}
   killCountText: {fileID: 4516357250660900034}
 --- !u!1 &4959421056041660051
 GameObject:
@@ -995,7 +996,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.62
+  m_Value: 0.546
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1036,7 +1037,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 22.5, y: 11.6}
+  m_AnchoredPosition: {x: 22.5, y: 11.599998}
   m_SizeDelta: {x: 36.87761, y: 7}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2812958287318920767

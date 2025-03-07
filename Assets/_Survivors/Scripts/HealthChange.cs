@@ -7,7 +7,7 @@ public struct HealthChange
     // public GameObject Source;
     // public GameObject Target;
 
-    public HealthChange(int amount, HealthChangeType type)
+    public HealthChange(int amount, HealthChangeType type = HealthChangeType.Normal)
     {
         Amount = amount;
         Type = type;

@@ -349,12 +349,13 @@ GameObject:
   m_Component:
   - component: {fileID: 8332691676581628784}
   - component: {fileID: 6383299360678705613}
+  - component: {fileID: 4210260229652975014}
   - component: {fileID: 2306233419783903431}
   - component: {fileID: 3537780526566500372}
   - component: {fileID: 4233275958854377417}
   - component: {fileID: 5593334837714150053}
   - component: {fileID: 3534225561954471412}
-  - component: {fileID: 4210260229652975014}
+  - component: {fileID: 429377467377080209}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -436,6 +437,33 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!50 &4210260229652975014
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7713493115931330554}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!58 &2306233419783903431
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -466,7 +494,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -543,30 +571,25 @@ MonoBehaviour:
   MovementSpeed: 10
   RunningAnimationThreshold: 0.1
   animator: {fileID: 3537780526566500372}
---- !u!50 &4210260229652975014
-Rigidbody2D:
-  serializedVersion: 5
+--- !u!114 &429377467377080209
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7713493115931330554}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3ce51356e26de442bf674b65d5821a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <IsInvinsible>k__BackingField: 0
+  <Current>k__BackingField: 0
+  <Max>k__BackingField: 100
+  OnHealthChangeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDyingEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  animator: {fileID: 3537780526566500372}

@@ -1,3 +1,4 @@
+using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
 using Zenject;
 
@@ -12,6 +13,7 @@ public class MainInstaller : MonoInstaller
     [Header("Prefabs")]
     [SerializeField] GameObject enemyPrefab;
     [SerializeField] GameObject bulletPrefab;
+    [SerializeField] GameObject propItemPrefab;
     [SerializeField] GameObject textPopupPrefab;
 
     public override void InstallBindings()
@@ -36,7 +38,7 @@ public class MainInstaller : MonoInstaller
             .FromMonoPoolableMemoryPool(x =>
                 x.WithInitialSize(10)
                 .FromComponentInNewPrefab(enemyPrefab)
-                .UnderTransformGroup("Enemies")
+                .UnderTransformGroup("Pools/Enemies")
             );
 
         // bullet factory
@@ -44,11 +46,19 @@ public class MainInstaller : MonoInstaller
             .FromMonoPoolableMemoryPool(x =>
                 x.WithInitialSize(10)
                 .FromComponentInNewPrefab(bulletPrefab)
-                .UnderTransformGroup("Bullets")
+                .UnderTransformGroup("Pools/Bullets")
             );
 
         Container.Bind<EnemySpawningArea>().FromComponentInHierarchy(true).AsSingle();
         Container.Bind<EnemySpawner>().FromComponentInHierarchy(true).AsSingle();
+
+        // prop factory
+        Container.BindFactory<Vector2, PropData, PropItem, PropItem.Factory>()
+            .FromMonoPoolableMemoryPool(x =>
+                x.WithInitialSize(5)
+                .FromComponentInNewPrefab(propItemPrefab)
+                .UnderTransformGroup("Pools/Props")
+            );
 
         // UI 
         // text popup pool
@@ -72,7 +82,12 @@ public class MainInstaller : MonoInstaller
         Container.DeclareSignal<EnemyDamageSignal>().OptionalSubscriber();
         Container.DeclareSignal<EnemyDeathSignal>().OptionalSubscriber();
 
-        // stats signals
+        // prop signals
+        Container.DeclareSignal<PropPickedSignal>();
+
+        // general signals
         Container.DeclareSignal<ScoreChangedSignal>();
+        Container.DeclareSignal<AddExperienceSignal>();
+
     }
 }

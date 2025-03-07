@@ -8,6 +8,7 @@ public class PlayerWeapon : MonoBehaviour
 {
     public bool HasTarget => Target != null;
     public bool IsPlayerFlipped => transform.localScale.x < 0;
+    public int Ammo { get; protected set; }
 
     [Header("If ticked,\ntarget can be assigned manually for testing")]
     public bool DisableAutoTargetSelection; // for debugging purposes
@@ -38,7 +39,7 @@ public class PlayerWeapon : MonoBehaviour
     Transform FindClosestTarget()
     {
         // find enemies in weapon range
-        Physics2D.OverlapCircle(firePoint.position, WeaponData.AutoAimRadius, new ContactFilter2D { layerMask = enemyLayer, useLayerMask = true }, closeEnemies);
+        Physics2D.OverlapCircle(firePoint.position, WeaponData.AutoAimRadius, new ContactFilter2D { layerMask = enemyLayer, useLayerMask = true, useTriggers = true }, closeEnemies);
 
         if (closeEnemies.Count == 0)
         {
@@ -126,10 +127,19 @@ public class PlayerWeapon : MonoBehaviour
         timeSinceLastShot = 0;
     }
 
-    void ChangeWeapon(WeaponData data)
+    // TODO not implemented
+    public void AddAmmo(int amount)
+    {
+        Ammo += amount;
+    }
+
+    // TODO not implemented
+    public void ChangeWeapon(WeaponData data)
     {
         WeaponData = data;
 
         weaponSprite.gameObject.SetActive(WeaponData != null);
     }
+
+
 }

@@ -7,6 +7,7 @@ public class PropData : ScriptableObject
 
     [Header("For UI and Description")]
     public string ItemName;
+    [TextArea]
     public string Description;
 
     [Header("For Gameplay")]

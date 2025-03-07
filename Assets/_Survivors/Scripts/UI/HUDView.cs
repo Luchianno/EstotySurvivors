@@ -6,14 +6,16 @@ using Zenject;
 
 public class HUDView : MonoBehaviour
 {
-    [SerializeField] Color healingColor;
-    [SerializeField] Image healthBar;
-    [SerializeField] Image xpBar;
+    [SerializeField] float healthAnimationDuration = 0.3f;
+    [SerializeField] float xpAnimationDuration = 0.3f;
+
+    [SerializeField] Slider healthBar;
+    [SerializeField] Slider xpBar;
     [SerializeField] TextMeshProUGUI killCountText;
 
     [Inject] SignalBus signalBus;
 
-    private void Start()
+    void Start()
     {
         signalBus.Subscribe<PlayerDamageSignal>(OnPlayerDamage);
         signalBus.Subscribe<PlayerHealSignal>(OnPlayerHeal);
@@ -25,20 +27,22 @@ public class HUDView : MonoBehaviour
 
     void Reset()
     {
-        healthBar.fillAmount = 1;
-        xpBar.fillAmount = 0;
+        healthBar.SetValueWithoutNotify(1); 
+        xpBar.SetValueWithoutNotify(0); 
         killCountText.text = "0";
     }
 
 
     void OnPlayerDamage(PlayerDamageSignal signal)
     {
-        healthBar.DOFillAmount((float)signal.Amount / 100, 0.3f);
+        healthBar.DOValue((float)signal.CurrentHealth / signal.MaxHealth, healthAnimationDuration)
+            .SetEase(Ease.OutCubic);
     }
 
     void OnPlayerHeal(PlayerHealSignal signal)
     {
-        healthBar.DOFillAmount((float)signal.Current / signal.Max, 0.3f);
+        healthBar.DOValue((float)signal.CurrentHealth / signal.MaxHealth, healthAnimationDuration)
+            .SetEase(Ease.OutBounce);
     }
 
     void UpdateKillCounter(ScoreChangedSignal signal)

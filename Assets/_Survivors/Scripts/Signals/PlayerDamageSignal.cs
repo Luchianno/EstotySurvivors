@@ -8,13 +8,7 @@ public struct PlayerDamageSignal
 
     public PlayerDamageSignal(int damage, int currentHealth, int maxHealth)
     {
-        if (damage < 0)
-        {
-            Debug.LogError("Damage amount cannot be negative");
-            damage = 0;
-        }
-
-        this.Amount = damage;
+        this.Amount = Mathf.Abs(damage);
         this.CurrentHealth = currentHealth;
         this.MaxHealth = maxHealth;
     }

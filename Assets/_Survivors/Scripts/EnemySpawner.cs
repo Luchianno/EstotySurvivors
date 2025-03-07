@@ -7,7 +7,7 @@ using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
 
-// Spawn enemies individually and by waves as well
+// Spawn enemies individually and by groups as well
 public class EnemySpawner : MonoBehaviour
 {
     public HashSet<EnemyUnit> Enemies => enemies;

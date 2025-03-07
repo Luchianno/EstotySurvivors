@@ -2,12 +2,11 @@ using UnityEngine;
 
 public class PlayerHealSignal
 {
-    public int Previous { get; }
     public int Amount { get; }
-    public int Current { get; }
-    public int Max { get; }
+    public int CurrentHealth { get; }
+    public int MaxHealth { get; }
 
-    public PlayerHealSignal(int heal, int previous, int current, int max)
+    public PlayerHealSignal(int heal, int current, int max)
     {
         if (heal < 0)
         {
@@ -15,9 +14,8 @@ public class PlayerHealSignal
             heal = 0;
         }
         Amount = heal;
-        Previous = previous;
-        Current = current;
-        Max = max;
+        CurrentHealth = current;
+        MaxHealth = max;
     }
 
     public override string ToString()

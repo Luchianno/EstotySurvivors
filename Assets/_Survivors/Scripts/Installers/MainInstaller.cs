@@ -5,8 +5,11 @@ public class MainInstaller : MonoInstaller
 {
     public bool ForceOnScreenJoystick = false;
 
-    [SerializeField] AppSettings appSettings;
     [Space]
+    [SerializeField] LevelProgression levelProgression;
+
+    [Space]
+    [Header("Prefabs")]
     [SerializeField] GameObject enemyPrefab;
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] GameObject textPopupPrefab;
@@ -22,23 +25,7 @@ public class MainInstaller : MonoInstaller
             Container.BindInterfacesAndSelfTo<PlayerInputJoystick>().AsSingle();
         }
 
-        // app settings
-        Container.Bind<AppSettings>().FromInstance(Instantiate(appSettings)).AsSingle();
-
-        // * Signals *
-        // player signals
-        Container.DeclareSignal<PlayerDeathSignal>();
-        Container.DeclareSignal<PlayerDamageSignal>();
-        Container.DeclareSignal<PlayerHealSignal>();
-        Container.DeclareSignal<PlayerLevelUpSignal>();
-        Container.DeclareSignal<PlaySfxSignal>();
-
-        // enemy signals
-        Container.DeclareSignal<EnemyDamageSignal>().OptionalSubscriber();
-        Container.DeclareSignal<EnemyDeathSignal>().OptionalSubscriber();
-
-        // stats signals
-        Container.DeclareSignal<ScoreChangedSignal>();
+        Container.BindInterfacesAndSelfTo<LevelProgression>().FromInstance(Instantiate(levelProgression)).AsSingle();
 
         // find player game object and bind it
         var player = GameObject.FindGameObjectWithTag("Player");
@@ -71,5 +58,21 @@ public class MainInstaller : MonoInstaller
                 .FromComponentInNewPrefab(textPopupPrefab)
                 .UnderTransformGroup("TextPopups")
             );
+
+
+        // * Signals *
+        // player signals
+        Container.DeclareSignal<PlayerDeathSignal>();
+        Container.DeclareSignal<PlayerDamageSignal>();
+        Container.DeclareSignal<PlayerHealSignal>();
+        Container.DeclareSignal<PlayerLevelUpSignal>();
+        Container.DeclareSignal<PlaySfxSignal>();
+
+        // enemy signals
+        Container.DeclareSignal<EnemyDamageSignal>().OptionalSubscriber();
+        Container.DeclareSignal<EnemyDeathSignal>().OptionalSubscriber();
+
+        // stats signals
+        Container.DeclareSignal<ScoreChangedSignal>();
     }
 }

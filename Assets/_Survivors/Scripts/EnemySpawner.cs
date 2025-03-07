@@ -14,28 +14,15 @@ public class EnemySpawner : MonoBehaviour
 
     HashSet<EnemyUnit> enemies = new HashSet<EnemyUnit>();
 
-    [SerializeField] List<WeightPair> enemyTypes;
-
-    // enemy object pools:
+    [Inject] LevelProgression levelProgression;
     [Inject] EnemySpawningArea spawningArea;
     [Inject] EnemyUnit.Factory enemyFactory;
 
     // cache WaitForSeconds to avoid creating extra garbage
     WaitForSeconds waitASecond = new WaitForSeconds(1f);
     Coroutine updateRoutine;
-    List<float> cumulativeWeights = new List<float>();
 
     [Inject] SignalBus signalBus;
-
-    void Awake()
-    {
-        float totalWeight = 0;
-        foreach (var pair in enemyTypes)
-        {
-            totalWeight += pair.Weight;
-            cumulativeWeights.Add(totalWeight);
-        }
-    }
 
     void OnEnable()
     {
@@ -57,7 +44,7 @@ public class EnemySpawner : MonoBehaviour
         return enemies.Count < 10;
     }
 
-    public void SpawnIndividualEnemy() => SpawnIndividualEnemy(GetRandomEnemyType(), spawningArea.GetRandomPosition());
+    public void SpawnIndividualEnemy() => SpawnIndividualEnemy(levelProgression.CurrentLevel.GetRandomEnemyType(), spawningArea.GetRandomPosition());
 
     public void SpawnIndividualEnemy(EnemyData enemyData, Vector3 position)
     {
@@ -70,7 +57,7 @@ public class EnemySpawner : MonoBehaviour
 
     public void SpawnEnemyGroup(int amount)
     {
-        var enemyType = GetRandomEnemyType();
+        var enemyType = levelProgression.CurrentLevel.GetRandomEnemyType();
 
         for (int i = 0; i < amount; i++)
         {
@@ -83,19 +70,6 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    EnemyData GetRandomEnemyType()
-    {
-        float totalWeight = enemyTypes.Sum(x => x.Weight);
-        float randomValue = Random.value * totalWeight;
-
-        int selectedIndex = cumulativeWeights.BinarySearch(randomValue);
-        if (selectedIndex < 0)
-        {
-            selectedIndex = ~selectedIndex;
-        }
-
-        return enemyTypes[selectedIndex].Data;
-    }
 
     void OnEnemyDeath(EnemyDeathSignal signal)
     {

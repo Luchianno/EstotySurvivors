@@ -1,8 +1,9 @@
+using UnityEditor;
 using UnityEngine;
 
 // custom inspector for the EnemySpawner component, with buttons to spawn enemies 
-[UnityEditor.CustomEditor(typeof(EnemySpawner))]
-public class EnemySpawnerEditor : UnityEditor.Editor
+[CustomEditor(typeof(EnemySpawner))]
+public class EnemySpawnerEditor : Editor
 {
     public override void OnInspectorGUI()
     {

@@ -1,3 +1,4 @@
+using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,50 +16,55 @@ public class LandingScreen : UIScreen
         Show();
     }
 
-    public override void Show()
+    protected override IEnumerator ShowRoutine()
     {
-        base.Show();
-
         var titleRect = (RectTransform)title.transform;
 
         // move title from top to current position
-        titleRect.DOAnchorPosY(titleRect.anchoredPosition.y, 1f)
-            .From(new Vector3(0, 100, 0), setImmediately: false, isRelative: true)
+        titleRect.DOAnchorPosY(80, 1f) // Animate to the original Y position
+            .From(new Vector2(titleRect.anchoredPosition.y, 120)) // Start from Y position 1000
             .SetEase(Ease.OutBounce);
 
-        chaseParent.DOAnchorPosY(chaseParent.anchoredPosition.y, 1f)
-            .From(new Vector3(0, -100, 0))
-            .SetEase(Ease.OutBack);
+        chaseParent.DOAnchorPosY(-90f, 1f)
+            .From(new Vector3(0, -200, 0))
+            .SetEase(Ease.OutCubic);
 
         // move zombie from left to right and back again
-        zombieImage.DOAnchorPosX(2, 1.1f)
+        zombieImage.DOAnchorPosX(0, 1.1f)
+            .SetDelay(0.2f)
             .SetEase(Ease.InOutSine)
             .SetLoops(-1, LoopType.Yoyo);
 
         // move survivor from right to left and back again
-        survivorImage.DOAnchorPosX(-2, 1.3f)
+        survivorImage.DOAnchorPosX(0, 1.3f)
+            .SetDelay(0.3f)
             .SetEase(Ease.InOutSine)
             .SetLoops(-1, LoopType.Yoyo);
 
+        yield return null;
     }
 
-    public override void Hide()
+    protected override IEnumerator HideRoutine()
     {
-        base.Hide();
+        ToggleBackground(false);
+        TogglePanel(false);
+
         var titleRect = (RectTransform)title.transform;
 
         // move title from current position to top
-        titleRect.DOLocalMoveY(1000, 1f)
-            .SetEase(Ease.InBounce);
+        titleRect.DOAnchorPosY(200, 1f)
+            .SetEase(Ease.InCubic)
+            .OnComplete(() => OnHideAnimationEnded());
 
 
-        // zombie goes to left 
-        zombieImage.DOAnchorPosX(-10, 1.1f)
-            .SetEase(Ease.InOutSine);
+        zombieImage.DOKill();
+        survivorImage.DOKill();
 
-        // survivor goes to right
-        survivorImage.DOAnchorPosX(10, 1.3f)
-            .SetEase(Ease.InOutSine);
+        chaseParent.DOAnchorPosY(-250, 1f)
+            .SetEase(Ease.InCubic);
 
+        yield return new WaitForSeconds(2f);
+
+        OnHideAnimationEnded();
     }
 }

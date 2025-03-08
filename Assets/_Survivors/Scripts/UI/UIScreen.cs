@@ -1,3 +1,4 @@
+using System.Collections;
 using DG.Tweening;
 using log4net.Util;
 using NUnit.Framework;
@@ -19,6 +20,16 @@ public abstract class UIScreen : MonoBehaviour
 
     public virtual void Show()
     {
+        StartCoroutine(ShowRoutine());
+    }
+
+    public virtual void Hide()
+    {
+        StartCoroutine(HideRoutine());
+    }
+
+    protected virtual IEnumerator ShowRoutine()
+    {
         gameObject.SetActive(true);
 
         canvas.enabled = true;
@@ -26,12 +37,18 @@ public abstract class UIScreen : MonoBehaviour
 
         ToggleBackground(true);
         TogglePanel(true);
+
+        yield return null;
     }
 
-    public virtual void Hide()
+    protected virtual IEnumerator HideRoutine()
     {
         ToggleBackground(false);
         TogglePanel(false);
+
+        yield return new WaitForSeconds(Mathf.Max(backGroundFadeDuration, panelFadeDuration));
+
+        OnHideAnimationEnded();
     }
 
     protected virtual void OnHideAnimationEnded()

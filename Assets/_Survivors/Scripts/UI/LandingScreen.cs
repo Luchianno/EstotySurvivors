@@ -16,18 +16,18 @@ public class LandingScreen : UIScreen
     }
 
     public override void Show()
-    {   
+    {
         base.Show();
-        
+
         var titleRect = (RectTransform)title.transform;
 
         // move title from top to current position
         titleRect.DOAnchorPosY(titleRect.anchoredPosition.y, 1f)
-            .From(new Vector3(0, 1000, 0))
+            .From(new Vector3(0, 100, 0), setImmediately: false, isRelative: true)
             .SetEase(Ease.OutBounce);
 
         chaseParent.DOAnchorPosY(chaseParent.anchoredPosition.y, 1f)
-            .From(new Vector3(0, -1000, 0))
+            .From(new Vector3(0, -100, 0))
             .SetEase(Ease.OutBack);
 
         // move zombie from left to right and back again
@@ -39,7 +39,7 @@ public class LandingScreen : UIScreen
         survivorImage.DOAnchorPosX(-2, 1.3f)
             .SetEase(Ease.InOutSine)
             .SetLoops(-1, LoopType.Yoyo);
-        
+
     }
 
     public override void Hide()

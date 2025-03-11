@@ -9,6 +9,7 @@ public class EnemyHealth : UnitHealth
     [SerializeField] float deathStoneDuration = 5f;
     [SerializeField] EnemyUnit enemyUnit;
     [SerializeField] SpriteRenderer spriteRenderer;
+    [SerializeField] SpriteRenderer shadowRenderer;
     [SerializeField] Animator animator;
 
     [Inject] SignalBus signalBus;
@@ -23,6 +24,15 @@ public class EnemyHealth : UnitHealth
             animator = GetComponent<Animator>();
 
         waitForDeathStone = new WaitForSeconds(deathStoneDuration);
+    }
+
+    public override void ResetState()
+    {
+        base.ResetState();
+
+        animator.SetBool("Dead", false);
+        spriteRenderer.DOFade(1, 0);
+        shadowRenderer.DOFade(1, 0);
     }
 
 
@@ -43,10 +53,13 @@ public class EnemyHealth : UnitHealth
         base.OnDying();
 
         animator.SetBool("Dead", true);
+        shadowRenderer.DOFade(0, 0.3f);
         
         signalBus.Fire(new EnemyDeathSignal(enemyUnit));
 
-        spriteRenderer.DOFade(0, deathStoneDuration).OnComplete(() =>
+        spriteRenderer.DOFade(0, deathStoneDuration)
+            .SetEase(Ease.InQuad)
+            .OnComplete(() =>
         {
             enemyUnit.Dispose();
         });

@@ -173,9 +173,10 @@ MonoBehaviour:
   OnDyingEvent:
     m_PersistentCalls:
       m_Calls: []
-  deathStoneDuration: 5
+  deathStoneDuration: 3
   enemyUnit: {fileID: 1459312378962273229}
   spriteRenderer: {fileID: 5393853673172609293}
+  shadowRenderer: {fileID: 3641520632169120381}
   animator: {fileID: 3551877275939195094}
 --- !u!114 &1459312378962273229
 MonoBehaviour:

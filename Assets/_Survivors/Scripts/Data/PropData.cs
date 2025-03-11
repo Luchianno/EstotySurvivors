@@ -6,7 +6,7 @@ public class PropData : ScriptableObject
     public string InternalName;
 
     [Header("For UI and Description")]
-    public string ItemName;
+    public string DisplayName;
     [TextArea]
     public string Description;
 

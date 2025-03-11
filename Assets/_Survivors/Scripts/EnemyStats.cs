@@ -14,7 +14,7 @@ public struct EnemyStats
         Speed = UnityEngine.Random.Range(data.SpeedMin, data.SpeedMax);
         MaxHealth = UnityEngine.Random.Range(data.HealthMin, data.HealthMax);
         ContactDamage = UnityEngine.Random.Range(data.ContactDamageMin, data.ContactDamageMax);
-        EnemySize = UnityEngine.Random.Range(data.EnemySizeMin, data.EnemySizeMax);
+        EnemySize = UnityEngine.Random.Range(data.SizeMin, data.SizeMax);
     }
 
 

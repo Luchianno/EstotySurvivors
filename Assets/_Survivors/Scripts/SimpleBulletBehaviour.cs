@@ -36,6 +36,7 @@ public class SimpleBulletBehaviour : MonoBehaviour, IPoolable<Vector2, Vector2, 
 
     public void OnDespawned()
     {
+        pool = null;
         Data = null;
     }
 

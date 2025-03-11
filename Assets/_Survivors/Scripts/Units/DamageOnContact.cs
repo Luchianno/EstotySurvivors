@@ -6,9 +6,11 @@ using Zenject;
 // we override both OnTriggerEnter2D and OnTriggerExit2D, because enemy movement and collision handling might change in future
 public class DamageOnContact : MonoBehaviour
 {
+    const float damageInterval = 1;
+
     [SerializeField] EnemyUnit enemyUnit;
 
-    WaitForSeconds wait = new WaitForSeconds(1);
+    WaitForSeconds wait = new WaitForSeconds(damageInterval);
 
     Coroutine damageCoroutine;
 

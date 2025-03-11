@@ -25,9 +25,9 @@ public class LandingScreen : UIScreen
             .From(new Vector2(titleRect.anchoredPosition.y, 120)) // Start from Y position 1000
             .SetEase(Ease.OutBounce);
 
-        chaseParent.DOAnchorPosY(-90f, 1f)
-            .From(new Vector3(0, -200, 0))
-            .SetEase(Ease.OutCubic);
+        // chaseParent.DOAnchorPosY(-90f, 1f)
+        //     .From(new Vector3(0, -200, 0))
+        //     .SetEase(Ease.OutCubic);
 
         // move zombie from left to right and back again
         zombieImage.DOAnchorPosX(0, 1.1f)

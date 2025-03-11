@@ -18,6 +18,8 @@ public class MainInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
+        #region Player Input
+
         if (Application.isEditor && !ForceOnScreenJoystick)
         {
             Container.BindInterfacesAndSelfTo<PlayerInputKeyboard>().AsSingle();
@@ -27,11 +29,27 @@ public class MainInstaller : MonoInstaller
             Container.BindInterfacesAndSelfTo<PlayerInputJoystick>().AsSingle();
         }
 
+        #endregion
+
+
+        #region Level, Player, Enemies, Props        
+
         Container.BindInterfacesAndSelfTo<LevelProgression>().FromInstance(Instantiate(levelProgression)).AsSingle();
 
         // find player game object and bind it
         var player = GameObject.FindGameObjectWithTag("Player");
         Container.Bind<Transform>().WithId("Player").FromInstance(player.transform).AsSingle();
+
+        Container.Bind<EnemySpawningArea>().FromComponentInHierarchy(true).AsSingle();
+        Container.Bind<EnemySpawner>().FromComponentInHierarchy(true).AsSingle();
+        Container.Bind<PropSpawner>().FromComponentInHierarchy(true).AsSingle();
+
+        Container.Bind<EnemyMovementSystem>().FromComponentInHierarchy(true).AsSingle();
+
+        #endregion
+
+
+        #region Pools
 
         // enemy pool
         Container.BindFactory<Vector3, EnemyData, EnemyUnit, EnemyUnit.Factory>()
@@ -48,9 +66,6 @@ public class MainInstaller : MonoInstaller
                 .FromComponentInNewPrefab(bulletPrefab)
                 .UnderTransformGroup("Pools/Bullets")
             );
-
-        Container.Bind<EnemySpawningArea>().FromComponentInHierarchy(true).AsSingle();
-        Container.Bind<EnemySpawner>().FromComponentInHierarchy(true).AsSingle();
 
         // prop factory
         Container.BindFactory<Vector2, PropData, PropItem, PropItem.Factory>()
@@ -69,12 +84,20 @@ public class MainInstaller : MonoInstaller
                 .UnderTransformGroup("TextPopups")
             );
 
-        // UI screens
+        #endregion
+
+
+        #region UI screens
+
         Container.Bind<LandingScreen>().FromComponentInHierarchy(true).AsSingle();
         Container.Bind<DeathScreen>().FromComponentInHierarchy(true).AsSingle();
         Container.Bind<WinScreen>().FromComponentInHierarchy(true).AsSingle();
 
-        // * Signals *
+        #endregion
+
+
+        #region Signals
+
         // player signals
         Container.DeclareSignal<PlayerDeathSignal>();
         Container.DeclareSignal<PlayerDamageSignal>();
@@ -83,6 +106,7 @@ public class MainInstaller : MonoInstaller
         Container.DeclareSignal<PlaySfxSignal>();
 
         // enemy signals
+        Container.DeclareSignal<EnemySpawnedSignal>().OptionalSubscriber();
         Container.DeclareSignal<EnemyDamageSignal>().OptionalSubscriber();
         Container.DeclareSignal<EnemyDeathSignal>().OptionalSubscriber();
 
@@ -92,6 +116,8 @@ public class MainInstaller : MonoInstaller
         // general signals
         Container.DeclareSignal<ScoreChangedSignal>();
         Container.DeclareSignal<AddExperienceSignal>();
+
+        #endregion
 
     }
 }

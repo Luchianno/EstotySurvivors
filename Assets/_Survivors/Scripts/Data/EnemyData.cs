@@ -7,15 +7,15 @@ public class EnemyData : ScriptableObject
     public string InternalName;
 
     [Space]
-    public string EnemyName;
+    public string DisplayName;
     [TextArea]
     public string Description;
 
     [Space]
     [Range(1f, 10f)]
-    public float EnemySizeMin = 1f;
+    public float SizeMin = 1f;
     [Range(1f, 10f)]
-    public float EnemySizeMax = 1f;
+    public float SizeMax = 1f;
 
     [Min(0)]
     public float SpeedMin = 10f;

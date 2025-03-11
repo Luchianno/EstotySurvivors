@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using Zenject;
 using Random = UnityEngine.Random;
 
 // Spawn enemies individually and by groups as well
 public class EnemySpawner : MonoBehaviour
 {
+    public UnityEvent<EnemyUnit> OnEnemySpawnedEvent;
+
     public HashSet<EnemyUnit> Enemies => enemies;
 
     HashSet<EnemyUnit> enemies = new HashSet<EnemyUnit>();
@@ -51,6 +54,9 @@ public class EnemySpawner : MonoBehaviour
         var unit = enemyFactory.Create(position, enemyData);
 
         enemies.Add(unit);
+
+        signalBus.Fire(new EnemySpawnedSignal(unit));
+        OnEnemySpawnedEvent.Invoke(unit);
     }
 
     public void SpawnEnemyGroup(int minAmount, int maxAmount) => SpawnEnemyGroup(Random.Range(minAmount, maxAmount));

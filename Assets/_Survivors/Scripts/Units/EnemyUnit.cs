@@ -33,7 +33,7 @@ public class EnemyUnit : MonoBehaviour, IPoolable<Vector3, EnemyData, IMemoryPoo
         Stats = new EnemyStats(Data);
 
         transform.position = position;
-        transform.localScale = Vector3.one * Data.EnemySizeMin;
+        transform.localScale = Vector3.one * Data.SizeMin;
 
         Health.Max = Stats.MaxHealth;
         animator.runtimeAnimatorController = Data.AnimatorController;
@@ -47,11 +47,14 @@ public class EnemyUnit : MonoBehaviour, IPoolable<Vector3, EnemyData, IMemoryPoo
         }
     }
 
-    public void OnDespawned() { }
+    public void OnDespawned()
+    {
+        pool = null;
+    }
 
     public void Dispose()
     {
-        pool = null;
+        pool.Despawn(this);
     }
 
     public class Factory : PlaceholderFactory<Vector3, EnemyData, EnemyUnit> { }

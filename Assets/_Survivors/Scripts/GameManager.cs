@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
@@ -13,13 +14,18 @@ public class GameManager : MonoBehaviour
     [Inject] DeathScreen deathScreen;
     [Inject] WinScreen winScreen;
 
+    [Inject(Id = "Player")] Transform player;
+    [Inject] EnemySpawner enemySpawner;
+    [Inject] PropSpawner propSpawner;
+    [Inject] EnemyMovementSystem  enemyMovementSystem;
+
     void Start()
     {
         ChangeState(GameState.Landing);
     }
 
     public void ChangeState(GameState gameState)
-    {   
+    {
         StartCoroutine(ChangeStateRoutine(gameState));
     }
 
@@ -30,13 +36,25 @@ public class GameManager : MonoBehaviour
         switch (CurrentGameState)
         {
             case GameState.Landing:
+                player.gameObject.SetActive(false);
+                enemySpawner.enabled = false;
+                propSpawner.enabled = false;
+
                 // activate landing screen
                 landingScreen.Show();
                 yield return new WaitForSeconds(5.5f);
                 landingScreen.Hide();
+                yield return new WaitForSeconds(1f);
+
+                ChangeState(GameState.Playing);
+
                 break;
             case GameState.Playing:
-                // activate game and player and stuff
+                player.gameObject.SetActive(true);
+
+                enemySpawner.enabled = true;
+                propSpawner.enabled = true;
+
                 break;
             case GameState.DeathScreen:
                 deathScreen.Show();

@@ -113,6 +113,9 @@ public class MainInstaller : MonoInstaller
 
         #region Signals
 
+        // signal bus
+        SignalBusInstaller.Install(Container);
+        
         // player signals
         Container.DeclareSignal<PlayerDeathSignal>();
         Container.DeclareSignal<PlayerDamageSignal>();

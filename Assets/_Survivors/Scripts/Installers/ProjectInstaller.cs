@@ -7,8 +7,6 @@ public class ProjectInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
-        // signal bus
-        SignalBusInstaller.Install(Container);
         
         // app settings
         Container.Bind<AppSettings>().FromInstance(Instantiate(appSettings)).AsSingle();

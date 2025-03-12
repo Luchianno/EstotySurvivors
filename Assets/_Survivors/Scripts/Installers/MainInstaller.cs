@@ -14,7 +14,9 @@ public class MainInstaller : MonoInstaller
     [SerializeField] GameObject enemyPrefab;
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] GameObject propItemPrefab;
-    [SerializeField] GameObject textPopupPrefab;
+    [Space]
+    [SerializeField] GameObject damagePopupPrefab;
+    [SerializeField] GameObject tauntPopupPrefab;
 
     public override void InstallBindings()
     {
@@ -54,6 +56,13 @@ public class MainInstaller : MonoInstaller
         #endregion
 
 
+        #region UI
+
+        // FYI, UI Screens are injected through "ZenjectBinding" component on their respective GameObjects
+
+        #endregion
+
+
         #region Pools
 
         // enemy pool
@@ -81,11 +90,21 @@ public class MainInstaller : MonoInstaller
             );
 
         // UI 
-        // text popup pool
+        // damage text popup pool
         Container.BindFactory<string, Color, Vector3, TextPopup, TextPopup.Factory>()
+            .WithId("DamagePopup")
             .FromMonoPoolableMemoryPool(x =>
                 x.WithInitialSize(10)
-                .FromComponentInNewPrefab(textPopupPrefab)
+                .FromComponentInNewPrefab(damagePopupPrefab)
+                .UnderTransformGroup("TextPopups")
+            );
+
+        // taunt text popup pool
+        Container.BindFactory<string, Color, Vector3, TextPopup, TextPopup.Factory>()
+            .WithId("TauntPopup")
+            .FromMonoPoolableMemoryPool(x =>
+                x.WithInitialSize(10)
+                .FromComponentInNewPrefab(tauntPopupPrefab)
                 .UnderTransformGroup("TextPopups")
             );
 
@@ -117,6 +136,6 @@ public class MainInstaller : MonoInstaller
 
 
         #endregion
-
+        
     }
 }

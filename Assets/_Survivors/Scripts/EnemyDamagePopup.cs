@@ -7,7 +7,7 @@ public class EnemyDamagePopup : MonoBehaviour
     [SerializeField] Color damageColor = Color.red;
     [SerializeField] Color criticalDamageColor = Color.red;
 
-    [Inject] TextPopup.Factory textPopupFactory;
+    [Inject(Id = "DamagePopup")] TextPopup.Factory textPopupFactory;
 
     void Awake()
     {

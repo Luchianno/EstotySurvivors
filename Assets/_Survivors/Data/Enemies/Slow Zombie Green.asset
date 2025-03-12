@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Slow Zombie Green
   m_EditorClassIdentifier: 
   InternalName: Fast Skeleton
-  EnemyName: Slow Zombie
+  DisplayName: 
   Description: 
-  EnemySizeMin: 1
-  EnemySizeMax: 1
+  SizeMin: 1
+  SizeMax: 1
   SpeedMin: 2
   SpeedMax: 4
   HealthMin: 10
@@ -24,3 +24,4 @@ MonoBehaviour:
   ContactDamageMin: 10
   ContactDamageMax: 10
   AnimatorController: {fileID: 22100000, guid: 050556270436d4f4288557291a1a99c0, type: 2}
+  Taunts: {fileID: 11400000, guid: eaf8b6e25e16b4b49a5e2b16108b65af, type: 2}

@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Big Skeleton
   m_EditorClassIdentifier: 
   InternalName: Fast Skeleton
-  EnemyName: Slow Zombie
+  DisplayName: 
   Description: 
-  EnemySizeMin: 1
-  EnemySizeMax: 1
+  SizeMin: 1
+  SizeMax: 1
   SpeedMin: 1
   SpeedMax: 2
   HealthMin: 50
@@ -24,3 +24,4 @@ MonoBehaviour:
   ContactDamageMin: 30
   ContactDamageMax: 30
   AnimatorController: {fileID: 22100000, guid: 25f7a818644b68042bb0c0c2a28d1550, type: 2}
+  Taunts: {fileID: 11400000, guid: eaf8b6e25e16b4b49a5e2b16108b65af, type: 2}

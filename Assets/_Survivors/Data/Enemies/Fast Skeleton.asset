@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Fast Skeleton
   m_EditorClassIdentifier: 
   InternalName: Fast Skeleton
-  EnemyName: Fast Skeleton
+  DisplayName: 
   Description: 
-  EnemySizeMin: 1
-  EnemySizeMax: 1
+  SizeMin: 1
+  SizeMax: 1
   SpeedMin: 4
   SpeedMax: 5
   HealthMin: 10
@@ -24,3 +24,4 @@ MonoBehaviour:
   ContactDamageMin: 10
   ContactDamageMax: 10
   AnimatorController: {fileID: 22100000, guid: 8d1d920724ffb8a409ce0e458dc4b7a9, type: 2}
+  Taunts: {fileID: 11400000, guid: eaf8b6e25e16b4b49a5e2b16108b65af, type: 2}

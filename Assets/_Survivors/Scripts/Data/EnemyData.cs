@@ -34,6 +34,9 @@ public class EnemyData : ScriptableObject
     [Space, FormerlySerializedAs("Animator")]
     public AnimatorOverrideController AnimatorController;
 
+    [Space]
+    public TauntList Taunts;
+
     void OnValidate()
     {
         if (SpeedMin > SpeedMax)

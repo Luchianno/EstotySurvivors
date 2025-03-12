@@ -10,7 +10,13 @@ public class LevelProgression : ScriptableObject, ILevelProgression
 {
     public List<ILevel> Levels => levels.Cast<ILevel>().ToList();
 
-    public int CurrentLevelIndex { get; set; }
+    public int CurrentLevelIndex
+    {
+        get => currentLevelIndex;
+        set => currentLevelIndex = Mathf.Clamp(value, 0, levels.Count - 1);
+    }
+
+    int currentLevelIndex = 0;
 
     public ILevel CurrentLevel => levels[CurrentLevelIndex];
 
@@ -24,6 +30,15 @@ public class LevelProgression : ScriptableObject, ILevelProgression
     void OnValidate()
     {
         Warmup();
+
+        // validate that level experience points are in ascending order
+        for (int i = 1; i < levels.Count; i++)
+        {
+            if (levels[i].ExperienceRequired <= levels[i - 1].ExperienceRequired)
+            {
+                Debug.LogError($"Level {i} experience points must be greater than level {i - 1} experience points");
+            }
+        }
     }
 
     void Warmup()

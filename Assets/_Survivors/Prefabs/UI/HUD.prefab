@@ -567,7 +567,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthAnimationDuration: 0.3
-  xpAnimationDuration: 0.3
+  xpAnimationDuration: 1
   healthBar: {fileID: 2812958287318920767}
   xpBar: {fileID: 4829024688914814421}
   killCountText: {fileID: 4516357250660900034}
@@ -997,7 +997,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.546
+  m_Value: 0.523
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

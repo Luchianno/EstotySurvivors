@@ -3,7 +3,8 @@ using UnityEngine;
 
 public interface ILevel
 {
-    int GetMaxEnemies();
+    int ExperienceRequired { get; }
+    int MaxEnemies { get; }
     List<EnemyWeightPair> GetEnemyProbability();
 
     EnemyData GetRandomEnemyType();

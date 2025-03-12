@@ -6,12 +6,11 @@ using Random = UnityEngine.Random;
 [Serializable]
 public class Level : ILevel
 {
-    [SerializeField] int experienceRequired;
+    [field: SerializeField] public int ExperienceRequired { get; protected set; }
+    [field: SerializeField] public int MaxEnemies { get; protected set; }
     [SerializeField] List<EnemyWeightPair> EnemyProbability;
-    [SerializeField] int MaxEnemies;
 
     public List<EnemyWeightPair> GetEnemyProbability() => EnemyProbability;
-    public int GetMaxEnemies() => MaxEnemies;
 
     List<float> cumulativeWeights = new List<float>();
 

@@ -1,20 +1,59 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class ExperienceManager : MonoBehaviour
+public class ExperienceManager : IInitializable
 {
-    [Inject] SignalBus signalBus;
+    // progress till next level. so we clamp it between previous and next level experience
+    public float Progress
+    {
+        get
+        {
+            var previousLevelExp = levelProgression.CurrentLevelIndex > 0 ? levelProgression.Levels[levelProgression.CurrentLevelIndex - 1].ExperienceRequired : 0;
+            var nextLevelExp = levelProgression.CurrentLevel.ExperienceRequired;
 
-    public int Experience { get; protected set; }
+            return (float)(TotalExperience - previousLevelExp) / (nextLevelExp - previousLevelExp);
+        }
+
+    }
+
+    [Inject] SignalBus signalBus;
+    [Inject] LevelProgression levelProgression;
+
+    public int TotalExperience { get; protected set; }
+
+    public void Initialize()
+    {
+        signalBus.Subscribe<AddExperienceSignal>(AddExperience);
+    }
 
     public void Reset()
     {
-        Experience = 0;
+        TotalExperience = 0;
     }
+
+    public void AddExperience(AddExperienceSignal signal) => AddExperience(signal.Amount);
 
     public void AddExperience(int amount)
     {
-        Experience += amount;
+        TotalExperience += amount;
+
+        var levelsGained = 0;
+
+        while (TotalExperience >= levelProgression.CurrentLevel.ExperienceRequired)
+        {
+            levelProgression.CurrentLevelIndex++;
+            levelsGained++;
+
+            signalBus.Fire(new PlayerLevelUpSignal(levelProgression.CurrentLevelIndex));
+
+            if (levelProgression.CurrentLevelIndex == levelProgression.Levels.Count - 1)
+            {
+                break;
+            }
+        }
+
+        signalBus.Fire(new PlayerExperienceGainedSignal(amount, Progress, levelsGained));
     }
 
 }

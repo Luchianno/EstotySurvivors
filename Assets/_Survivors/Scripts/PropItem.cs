@@ -6,10 +6,12 @@ using Zenject;
 
 public class PropItem : MonoBehaviour, IPoolable<Vector2, PropData, IMemoryPool>, IDisposable
 {
+
     [SerializeField] PropData Data;
 
     [Space]
     [SerializeField] SpriteRenderer spriteRenderer;
+    [SerializeField] float pickupAnimationDuration = 0.3f;
 
     [Inject] SignalBus signalBus;
 
@@ -44,8 +46,8 @@ public class PropItem : MonoBehaviour, IPoolable<Vector2, PropData, IMemoryPool>
     protected virtual IEnumerator OnPickup()
     {
         // play animations and stuff, then dispose
-        spriteRenderer.transform.DOScale(Vector3.zero, 0.5f)
-            .SetEase(Ease.InBack)
+        spriteRenderer.transform.DOScale(Vector3.zero, pickupAnimationDuration)
+            .SetEase(Ease.InBounce)
             .OnComplete(Dispose);
 
         yield return null;
@@ -60,6 +62,8 @@ public class PropItem : MonoBehaviour, IPoolable<Vector2, PropData, IMemoryPool>
     {
         this.pool = pool;
         Data = data;
+
+        gameObject.name = data.InternalName;
         spriteRenderer.sprite = data.Icon;
 
         transform.position = position;

@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Test Level Progression
   m_EditorClassIdentifier: 
   levels:
-  - experienceRequired: 0
+  - <ExperienceRequired>k__BackingField: 10
+    <MaxEnemies>k__BackingField: 10
     EnemyProbability:
     - <Data>k__BackingField: {fileID: 11400000, guid: b47693058bf9a3f4aae4103ea0717978, type: 2}
       <Weight>k__BackingField: 50
@@ -21,8 +22,8 @@ MonoBehaviour:
       <Weight>k__BackingField: 25
     - <Data>k__BackingField: {fileID: 11400000, guid: 6db3c24458effa34889f9f95871f9bd0, type: 2}
       <Weight>k__BackingField: 25
-    MaxEnemies: 10
-  - experienceRequired: 10
+  - <ExperienceRequired>k__BackingField: 20
+    <MaxEnemies>k__BackingField: 20
     EnemyProbability:
     - <Data>k__BackingField: {fileID: 11400000, guid: b47693058bf9a3f4aae4103ea0717978, type: 2}
       <Weight>k__BackingField: 50
@@ -32,4 +33,14 @@ MonoBehaviour:
       <Weight>k__BackingField: 20
     - <Data>k__BackingField: {fileID: 11400000, guid: 3cdcfe40cd236b947b010fc8ff170000, type: 2}
       <Weight>k__BackingField: 10
-    MaxEnemies: 20
+  - <ExperienceRequired>k__BackingField: 50
+    <MaxEnemies>k__BackingField: 40
+    EnemyProbability:
+    - <Data>k__BackingField: {fileID: 11400000, guid: b47693058bf9a3f4aae4103ea0717978, type: 2}
+      <Weight>k__BackingField: 50
+    - <Data>k__BackingField: {fileID: 11400000, guid: 0c602aa43af5fc743a56ea34a1593903, type: 2}
+      <Weight>k__BackingField: 20
+    - <Data>k__BackingField: {fileID: 11400000, guid: 6db3c24458effa34889f9f95871f9bd0, type: 2}
+      <Weight>k__BackingField: 20
+    - <Data>k__BackingField: {fileID: 11400000, guid: 3cdcfe40cd236b947b010fc8ff170000, type: 2}
+      <Weight>k__BackingField: 10

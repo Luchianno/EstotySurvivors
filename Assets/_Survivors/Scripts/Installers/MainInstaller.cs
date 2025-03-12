@@ -47,6 +47,7 @@ public class MainInstaller : MonoInstaller
         Container.Bind<EnemyMovementSystem>().FromComponentInHierarchy(true).AsSingle();
 
         Container.BindInterfacesAndSelfTo<PlayerStatsManager>().AsSingle();
+        Container.BindInterfacesAndSelfTo<ExperienceManager>().AsSingle();
 
         #endregion
 
@@ -104,6 +105,7 @@ public class MainInstaller : MonoInstaller
         Container.DeclareSignal<PlayerDeathSignal>();
         Container.DeclareSignal<PlayerDamageSignal>();
         Container.DeclareSignal<PlayerHealSignal>();
+        Container.DeclareSignal<PlayerExperienceGainedSignal>();
         Container.DeclareSignal<PlayerLevelUpSignal>();
         Container.DeclareSignal<PlaySfxSignal>();
 
@@ -117,7 +119,9 @@ public class MainInstaller : MonoInstaller
 
         // general signals
         Container.DeclareSignal<ScoreChangedSignal>();
-        Container.DeclareSignal<AddExperienceSignal>();
+        Container.DeclareSignal<AddExperienceSignal>(); 
+
+
 
         #endregion
 

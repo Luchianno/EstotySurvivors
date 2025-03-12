@@ -44,10 +44,5 @@ public class PlayerHealth : UnitHealth
         animator.SetBool("Dead", true);
 
         signalBus.Fire(new PlayerDeathSignal());
-
-        // spriteRenderer.DOFade(0, deathStoneDuration).OnComplete(() =>
-        // {
-        //     enemyUnit.Dispose();
-        // });
     }
 }

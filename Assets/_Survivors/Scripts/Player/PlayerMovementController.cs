@@ -11,17 +11,17 @@ public class PlayerMovementController : MonoBehaviour
 
     [Inject] IPlayerInput playerInput;
 
-    public void Tick()
-    {
-        this.transform.position += new Vector3(playerInput.MovementInput.x, playerInput.MovementInput.y, 0) * (MovementSpeed * Time.deltaTime);
-
-        animator.SetBool("IsRunning", playerInput.MovementInput.sqrMagnitude >= RunningAnimationThreshold * RunningAnimationThreshold);
-    }
-
     void Update()
     {
         if (UpdateWhen == UpdateType.Update)
             Tick();
+    }
+
+    public void Tick()
+    {
+        this.transform.position += new Vector3(playerInput.MovementInput.x, playerInput.MovementInput.y, 0) * (MovementSpeed * Time.deltaTime);
+
+        animator.SetBool("Running", playerInput.MovementInput.sqrMagnitude >= RunningAnimationThreshold * RunningAnimationThreshold);
     }
 
     public enum UpdateType

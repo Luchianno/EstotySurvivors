@@ -20,6 +20,8 @@ public abstract class UIScreen : MonoBehaviour
 
     public virtual void Show()
     {
+        this.gameObject.SetActive(true);
+
         StartCoroutine(ShowRoutine());
     }
 
@@ -30,8 +32,6 @@ public abstract class UIScreen : MonoBehaviour
 
     protected virtual IEnumerator ShowRoutine()
     {
-        gameObject.SetActive(true);
-
         canvas.enabled = true;
         mainCanvasGroup.blocksRaycasts = true;
 

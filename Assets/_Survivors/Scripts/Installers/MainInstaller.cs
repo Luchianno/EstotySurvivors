@@ -46,6 +46,8 @@ public class MainInstaller : MonoInstaller
 
         Container.Bind<EnemyMovementSystem>().FromComponentInHierarchy(true).AsSingle();
 
+        Container.BindInterfacesAndSelfTo<PlayerStatsManager>().AsSingle();
+
         #endregion
 
 

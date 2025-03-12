@@ -6,12 +6,17 @@ using Zenject;
 
 public class HUDView : MonoBehaviour
 {
+    [Space]
     [SerializeField] float healthAnimationDuration = 0.3f;
     [SerializeField] float xpAnimationDuration = 0.5f;
 
+    [Space]
     [SerializeField] Slider healthBar;
     [SerializeField] Slider xpBar;
     [SerializeField] TextMeshProUGUI killCountText;
+
+    [Space]
+    [SerializeField] AudioClip levelUpSound;
 
     [Inject] SignalBus signalBus;
 
@@ -51,7 +56,8 @@ public class HUDView : MonoBehaviour
         killCountText.text = signal.Score.ToString();
 
         // animate label
-        killCountText.transform.DOPunchScale(Vector3.one * 0.4f, 0.5f);
+        killCountText.rectTransform.DOPunchScale(Vector3.one * 0.4f, 0.5f)
+            .From();
     }
 
     void OnPlayerExperienceGained(PlayerExperienceGainedSignal signal)
@@ -62,7 +68,10 @@ public class HUDView : MonoBehaviour
         // fill the xp bar as many times as levels gained
         for (int i = 0; i < signal.LevelsGained; i++)
         {
-            sequence.Append(xpBar.DOValue(1, xpAnimationDuration).SetEase(Ease.OutCubic));
+            sequence.Append(xpBar.DOValue(1, xpAnimationDuration).SetEase(Ease.OutCubic)).OnComplete(() =>
+            {
+                signalBus.Fire(new PlaySfxSignal(levelUpSound));
+            });
             sequence.AppendInterval(0.5f);
             sequence.Append(xpBar.DOValue(0, 0));
         }

@@ -568,7 +568,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UpdateWhen: 1
-  MovementSpeed: 10
+  MovementSpeed: 8
   RunningAnimationThreshold: 0.1
   animator: {fileID: 3537780526566500372}
 --- !u!114 &429377467377080209

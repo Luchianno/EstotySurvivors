@@ -176,6 +176,7 @@ GameObject:
   - component: {fileID: 5504102511049625808}
   - component: {fileID: 8176287633203872162}
   - component: {fileID: 1326071270997952267}
+  - component: {fileID: 4713480078583403865}
   m_Layer: 5
   m_Name: Landing Screen
   m_TagString: Untagged
@@ -280,6 +281,24 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &4713480078583403865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7158958322594297844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0166d8ff8d905b048b2448179e1f5d11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _components:
+  - {fileID: 1828829859272223582}
+  _identifier: 
+  _useSceneContext: 0
+  _context: {fileID: 0}
+  _bindType: 0
 --- !u!1 &7309653527133810020
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,8 +13,8 @@ public class GameStateMachine : MonoBehaviour
 
     // UI Screens
     [Inject] LandingScreen landingScreen;
-    [Inject] DeathScreen deathScreen;
-    [Inject] WinScreen winScreen;
+    [Inject(Id = "Lose")] EndgameScreen loseScreen;
+    [Inject(Id = "Win")] EndgameScreen winScreen;
 
     // gameplay systems in need of enabling/disabling based on game state
     [Inject(Id = "Player")] Transform player;
@@ -23,7 +23,8 @@ public class GameStateMachine : MonoBehaviour
     [Inject] EnemyMovementSystem enemyMovementSystem;
 
     // other
-    [Inject] PlayerStatsManager highScoreManager;
+    [Inject] PlayerStatsManager statsManager;
+    [Inject] AudioManager audioManager;
 
     void Start()
     {
@@ -70,13 +71,23 @@ public class GameStateMachine : MonoBehaviour
 
                 break;
             case GameState.DeathScreen:
-                deathScreen.Show(highScoreManager.CurrentScore, highScoreManager.IsNewHighScore);
+                audioManager.FadeMusicVolume(0.1f, 0.3f);
+                loseScreen.Show(statsManager.CurrentScore, statsManager.IsNewHighScore);
+
                 yield return new WaitForSeconds(5.5f);
+                
+                statsManager.ResetAndSaveHighScore();
+
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 break;
             case GameState.WinScreen:
+                audioManager.FadeMusicVolume(0.1f, 0.3f);
                 winScreen.Show();
+
                 yield return new WaitForSeconds(5.5f);
+                
+                statsManager.ResetAndSaveHighScore();
+
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 break;
         }

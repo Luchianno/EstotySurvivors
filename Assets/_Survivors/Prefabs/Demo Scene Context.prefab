@@ -441,7 +441,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 120fc5e8d28dc86499822b7e3b7f5929, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chancePerSecond: 0.7
+  chancePerSecond: 0.9
+  tickRateSeconds: 0.5
   props:
   - <Data>k__BackingField: {fileID: 11400000, guid: 53e30d9c6e5a0e34995da30fa2767cf5, type: 2}
     <Weight>k__BackingField: 20

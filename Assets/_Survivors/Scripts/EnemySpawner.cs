@@ -18,7 +18,7 @@ public class EnemySpawner : MonoBehaviour
     HashSet<EnemyUnit> enemies = new HashSet<EnemyUnit>();
 
     [Inject] LevelProgression levelProgression;
-    [Inject] EnemySpawningArea spawningArea;
+    [Inject] SpawningArea spawningArea;
     [Inject] EnemyUnit.Factory enemyFactory;
 
     // cache WaitForSeconds to avoid creating extra garbage

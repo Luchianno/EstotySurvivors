@@ -220,10 +220,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6672621372943094942}
+  - component: {fileID: 8423166157398478071}
   - component: {fileID: 5107497993443348795}
   - component: {fileID: 7936635144231192022}
   - component: {fileID: 6788796420234136404}
-  - component: {fileID: 101855374861634959}
+  - component: {fileID: 6009084688108340009}
   m_Layer: 5
   m_Name: Win Screen
   m_TagString: Untagged
@@ -252,6 +253,32 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8423166157398478071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2805191636334405609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d44e1a5150796e4ea45b201984e1566, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 5107497993443348795}
+  mainCanvasGroup: {fileID: 7936635144231192022}
+  background: {fileID: 535513648465982655}
+  panel: {fileID: 1337871206733708879}
+  backGroundFadeDuration: 0.5
+  panelFadeDuration: 0.5
+  DisableGameObjectOnHide: 0
+  scoreLabel: {fileID: 6860446299290193672}
+  countDownText: {fileID: 2231486080812523504}
+  scoreText: 'Zombies Killed: '
+  highScoreText: 'NEW HIGH SCORE: '
+  newHighScoreColor: {r: 0.06175351, g: 1, b: 0, a: 1}
+  highsScoreFlashPeriod: 0.5
+  soundEffect: {fileID: 8300000, guid: 2c4bc183a5df5aa4baf7c4fcf236a2de, type: 3}
 --- !u!223 &5107497993443348795
 Canvas:
   m_ObjectHideFlags: 0
@@ -304,7 +331,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &101855374861634959
+--- !u!114 &6009084688108340009
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -313,17 +340,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 2805191636334405609}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1523de5fcf28865429bfe76d4ecdb060, type: 3}
+  m_Script: {fileID: 11500000, guid: 0166d8ff8d905b048b2448179e1f5d11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 5107497993443348795}
-  mainCanvasGroup: {fileID: 7936635144231192022}
-  background: {fileID: 535513648465982655}
-  panel: {fileID: 1337871206733708879}
-  backGroundFadeDuration: 0.5
-  panelFadeDuration: 0.5
-  DisableGameObjectOnHide: 0
-  scoreText: {fileID: 0}
+  _components:
+  - {fileID: 8423166157398478071}
+  _identifier: Win
+  _useSceneContext: 1
+  _context: {fileID: 0}
+  _bindType: 0
 --- !u!1 &3308870985019759035
 GameObject:
   m_ObjectHideFlags: 0

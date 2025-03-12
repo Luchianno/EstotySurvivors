@@ -40,7 +40,7 @@ public class MainInstaller : MonoInstaller
         var player = GameObject.FindGameObjectWithTag("Player");
         Container.Bind<Transform>().WithId("Player").FromInstance(player.transform).AsSingle();
 
-        Container.Bind<EnemySpawningArea>().FromComponentInHierarchy(true).AsSingle();
+        Container.Bind<SpawningArea>().FromComponentInHierarchy(true).AsSingle();
         Container.Bind<EnemySpawner>().FromComponentInHierarchy(true).AsSingle();
         Container.Bind<PropSpawner>().FromComponentInHierarchy(true).AsSingle();
 
@@ -48,6 +48,8 @@ public class MainInstaller : MonoInstaller
 
         Container.BindInterfacesAndSelfTo<PlayerStatsManager>().AsSingle();
         Container.BindInterfacesAndSelfTo<ExperienceManager>().AsSingle();
+
+        Container.Bind<AudioManager>().FromComponentInHierarchy().AsSingle();
 
         #endregion
 
@@ -90,15 +92,6 @@ public class MainInstaller : MonoInstaller
         #endregion
 
 
-        #region UI screens
-
-        Container.Bind<LandingScreen>().FromComponentInHierarchy(true).AsSingle();
-        Container.Bind<DeathScreen>().FromComponentInHierarchy(true).AsSingle();
-        Container.Bind<WinScreen>().FromComponentInHierarchy(true).AsSingle();
-
-        #endregion
-
-
         #region Signals
 
         // player signals
@@ -119,7 +112,7 @@ public class MainInstaller : MonoInstaller
 
         // general signals
         Container.DeclareSignal<ScoreChangedSignal>();
-        Container.DeclareSignal<AddExperienceSignal>(); 
+        Container.DeclareSignal<AddExperienceSignal>();
 
 
 

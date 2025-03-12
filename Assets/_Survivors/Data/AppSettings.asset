@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baf393f7c6f973e47a1a63423a5e4352, type: 3}
   m_Name: AppSettings
   m_EditorClassIdentifier: 
-  MusicVolume: 0.6
+  MusicVolume: 0.4
   SFXVolume: 0.6
   HighScore: 0

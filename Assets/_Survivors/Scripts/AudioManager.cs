@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using Zenject;
 
@@ -26,6 +27,20 @@ public class AudioManager : MonoBehaviour
         signalBus.Unsubscribe<PlaySfxSignal>(OnPlaySfx);
     }
 
+    public void FadeMusicVolume(float volume, float duration = 1f, bool saveSettings = false)
+    {
+        musicSource.DOFade(volume, duration)
+            .SetEase(Ease.Linear)
+            .OnComplete(() =>
+            {
+                if (saveSettings)
+                {
+                    appSettings.MusicVolume = volume;
+                    appSettings.SaveToPreferences();
+                }
+            });
+    }
+
     public void ToggleMusic()
     {
         musicSource.mute = !musicSource.mute;
@@ -38,6 +53,13 @@ public class AudioManager : MonoBehaviour
 
     void OnPlaySfx(PlaySfxSignal signal)
     {
-        sfxSource.PlayOneShot(signal.Clip);
+        if (signal.IsPositional)
+        {
+            AudioSource.PlayClipAtPoint(signal.Clip, signal.Position, appSettings.SFXVolume);
+        }
+        else
+        {
+            sfxSource.PlayOneShot(signal.Clip, appSettings.SFXVolume);
+        }
     }
 }

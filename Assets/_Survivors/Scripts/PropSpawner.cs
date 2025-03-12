@@ -8,20 +8,22 @@ public class PropSpawner : MonoBehaviour
 {
     [Header("Once per second, this chance is checked and then weighted random prop is spawned")]
     [SerializeField] float chancePerSecond = 0.1f;
+    [SerializeField] float tickRateSeconds = 1f;
     [SerializeField] List<PropWeightPair> props;
 
     [Inject] SignalBus signalBus;
-    [Inject] EnemySpawningArea spawningArea; // we're using same area as where enemies spawn
+    [Inject] SpawningArea spawningArea; // we're using same area as where enemies spawn
     [Inject] PropItem.Factory propFactory;
 
     WeightedRandomPicker<PropData> propPicker;
     // cache WaitForSeconds to avoid creating extra garbage
-    WaitForSeconds waitASecond = new WaitForSeconds(1f);
+    WaitForSeconds wait;
     Coroutine updateRoutine;
 
     void Awake()
     {
         propPicker = new WeightedRandomPicker<PropData>(props.Cast<IWeightPair<PropData>>());
+        wait = new WaitForSeconds(tickRateSeconds);
     }
 
     void OnEnable()
@@ -38,7 +40,7 @@ public class PropSpawner : MonoBehaviour
     {
         while (true)
         {
-            yield return waitASecond;
+            yield return wait;
 
             if (Random.value < chancePerSecond)
             {

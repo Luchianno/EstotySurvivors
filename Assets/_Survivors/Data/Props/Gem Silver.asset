@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Gem Silver
   m_EditorClassIdentifier: 
   InternalName: Gem
-  ItemName: XP Gem
+  DisplayName: 
   Description: 
   Type: 0
   Icon: {fileID: 1807624531, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
-  Value: 50
+  Value: 5

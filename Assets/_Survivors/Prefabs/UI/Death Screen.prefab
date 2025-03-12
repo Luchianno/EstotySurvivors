@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 7023279364558726538}
   - component: {fileID: 5521101346731899901}
   - component: {fileID: 6940920543599269120}
+  - component: {fileID: 3736246712098598150}
   m_Layer: 5
   m_Name: Death Screen
   m_TagString: Untagged
@@ -137,10 +138,11 @@ MonoBehaviour:
   DisableGameObjectOnHide: 0
   scoreLabel: {fileID: 491407236003161975}
   countDownText: {fileID: 8468936764257777829}
-  scoreText: 
+  scoreText: 'Zombies Killed: '
   highScoreText: 'NEW HIGH SCORE: '
   newHighScoreColor: {r: 0.06175351, g: 1, b: 0, a: 1}
   highsScoreFlashPeriod: 0.5
+  soundEffect: {fileID: 8300000, guid: c8a3fe17a6641ec48b38fb455a40a223, type: 3}
 --- !u!223 &7023279364558726538
 Canvas:
   m_ObjectHideFlags: 0
@@ -193,6 +195,24 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &3736246712098598150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 490815178564315911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0166d8ff8d905b048b2448179e1f5d11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _components:
+  - {fileID: 4994909209085250248}
+  _identifier: Lose
+  _useSceneContext: 1
+  _context: {fileID: 0}
+  _bindType: 0
 --- !u!1 &542480955487657461
 GameObject:
   m_ObjectHideFlags: 0

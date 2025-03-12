@@ -44,7 +44,7 @@ public class EnemySpawner : MonoBehaviour
 
     public bool ShouldSpawnMoreEnemies()
     {
-        return enemies.Count < 10;
+        return enemies.Count < levelProgression.CurrentLevel.MaxEnemies;
     }
 
     public void SpawnIndividualEnemy() => SpawnIndividualEnemy(levelProgression.CurrentLevel.GetRandomEnemyType(), spawningArea.GetRandomPosition());

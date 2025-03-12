@@ -1,7 +1,5 @@
 using System.Collections;
 using DG.Tweening;
-using log4net.Util;
-using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.UIElements;
 

@@ -21,6 +21,9 @@ public class PropItem : MonoBehaviour, IPoolable<Vector2, PropData, IMemoryPool>
     // So the props only will collide/trigger with the player
     protected virtual void OnTriggerEnter2D(Collider2D other)
     {
+        if (!gameObject.activeSelf)
+            return;
+
         signalBus.Fire(new PropPickedSignal(Data));
 
         switch (Data.Type)

@@ -6,14 +6,18 @@ using Zenject;
 
 public class HUDView : MonoBehaviour
 {
+    const string levelPrefix = "Lv.";
+
     [Space]
     [SerializeField] float healthAnimationDuration = 0.3f;
     [SerializeField] float xpAnimationDuration = 0.5f;
+    [SerializeField] float labelsAnimationDuration = 0.5f;
 
     [Space]
+    [SerializeField] TextMeshProUGUI killCountLabel;
     [SerializeField] Slider healthBar;
     [SerializeField] Slider xpBar;
-    [SerializeField] TextMeshProUGUI killCountText;
+    [SerializeField] TextMeshProUGUI levelLabel;
 
     [Space]
     [SerializeField] AudioClip levelUpSound;
@@ -27,6 +31,7 @@ public class HUDView : MonoBehaviour
 
         signalBus.Subscribe<ScoreChangedSignal>(UpdateKillCounter);
         signalBus.Subscribe<PlayerExperienceGainedSignal>(OnPlayerExperienceGained);
+        signalBus.Subscribe<PlayerLevelUpSignal>(OnPlayerLevelUp);
 
         Reset();
     }
@@ -35,7 +40,7 @@ public class HUDView : MonoBehaviour
     {
         healthBar.SetValueWithoutNotify(1);
         xpBar.SetValueWithoutNotify(0);
-        killCountText.text = "0";
+        killCountLabel.text = "0";
     }
 
 
@@ -53,11 +58,13 @@ public class HUDView : MonoBehaviour
 
     void UpdateKillCounter(ScoreChangedSignal signal)
     {
-        killCountText.text = signal.Score.ToString();
+        killCountLabel.text = signal.Score.ToString();
+
+        killCountLabel.DOKill(false);
+        killCountLabel.rectTransform.localScale = Vector3.one;
 
         // animate label
-        killCountText.rectTransform.DOPunchScale(Vector3.one * 0.4f, 0.5f)
-            .From();
+        killCountLabel.rectTransform.DOPunchScale(Vector3.one * 0.4f, labelsAnimationDuration);
     }
 
     void OnPlayerExperienceGained(PlayerExperienceGainedSignal signal)
@@ -80,9 +87,17 @@ public class HUDView : MonoBehaviour
         sequence.Append(xpBar.DOValue(signal.Progress, xpAnimationDuration).SetEase(Ease.OutCubic));
 
         sequence.Play();
+    }
 
+    void OnPlayerLevelUp(PlayerLevelUpSignal signal)
+    {
+        levelLabel.text = levelPrefix + signal.Level.ToString();
 
+        levelLabel.DOKill(false);
+        levelLabel.rectTransform.localScale = Vector3.one;
 
+        // animate label
+        levelLabel.rectTransform.DOPunchScale(Vector3.one * 0.4f, labelsAnimationDuration);
     }
 
 }

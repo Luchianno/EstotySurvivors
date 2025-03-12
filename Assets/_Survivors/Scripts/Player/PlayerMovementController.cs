@@ -8,11 +8,19 @@ public class PlayerMovementController : MonoBehaviour
     public float RunningAnimationThreshold = 0.1f;
 
     [SerializeField] Animator animator;
+    [SerializeField] PlayerHealth playerHealth;
 
     [Inject] IPlayerInput playerInput;
 
     void Update()
     {
+        if(!playerHealth.IsAlive)
+        {
+            animator.SetBool("Running", false);
+            return;
+        }
+
+
         if (UpdateWhen == UpdateType.Update)
             Tick();
     }

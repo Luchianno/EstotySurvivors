@@ -13,6 +13,7 @@ public class MainInstaller : MonoInstaller
     [SerializeField] GameObject enemyPrefab;
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] GameObject propItemPrefab;
+    [SerializeField] GameObject bulletExplosionPrefab;
     [Space]
     [SerializeField] GameObject damagePopupPrefab;
     [SerializeField] GameObject tauntPopupPrefab;
@@ -88,6 +89,13 @@ public class MainInstaller : MonoInstaller
                 .UnderTransformGroup("Pools/Props")
             );
 
+        Container.BindFactory<Vector2, BulletExplosion, BulletExplosion.Factory>()
+            .FromMonoPoolableMemoryPool(x =>
+                x.WithInitialSize(5)
+                .FromComponentInNewPrefab(bulletExplosionPrefab)
+                .UnderTransformGroup("Pools/Explosions")
+            );
+
         // UI 
         // damage text popup pool
         Container.BindFactory<string, Color, Vector3, TextPopup, TextPopup.Factory>()
@@ -114,7 +122,7 @@ public class MainInstaller : MonoInstaller
 
         // signal bus
         SignalBusInstaller.Install(Container);
-        
+
         // player signals
         Container.DeclareSignal<PlayerDeathSignal>();
         Container.DeclareSignal<PlayerDamageSignal>();
@@ -136,8 +144,7 @@ public class MainInstaller : MonoInstaller
         Container.DeclareSignal<AddExperienceSignal>();
 
 
-
         #endregion
-        
+
     }
 }

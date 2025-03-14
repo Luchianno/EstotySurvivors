@@ -571,6 +571,7 @@ MonoBehaviour:
   MovementSpeed: 8
   RunningAnimationThreshold: 0.1
   animator: {fileID: 3537780526566500372}
+  playerHealth: {fileID: 429377467377080209}
 --- !u!114 &429377467377080209
 MonoBehaviour:
   m_ObjectHideFlags: 0

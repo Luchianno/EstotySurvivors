@@ -543,6 +543,7 @@ MonoBehaviour:
   enemyPrefab: {fileID: 4190426983112607213, guid: b29611e9aa8957848bd7abc937fb3b0d, type: 3}
   bulletPrefab: {fileID: 4190426983112607213, guid: f81657d74ebcbb94b971e153939e110e, type: 3}
   propItemPrefab: {fileID: 2294431465147944749, guid: 8c8ffdcd50f49054f80f59cc2cb5c519, type: 3}
+  bulletExplosionPrefab: {fileID: 584933638865669162, guid: fd00706ca56e3c44f8acb244d0466e61, type: 3}
   damagePopupPrefab: {fileID: 2063554451390732439, guid: e856a79b0c961894696a885dc1765ca4, type: 3}
   tauntPopupPrefab: {fileID: 6225879868652454502, guid: ea586dd6228b66a4aa04525ed8b5bf65, type: 3}
 --- !u!114 &919334914285274062

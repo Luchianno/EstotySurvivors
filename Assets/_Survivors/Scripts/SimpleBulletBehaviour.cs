@@ -45,14 +45,12 @@ public class SimpleBulletBehaviour : MonoBehaviour, IPoolable<Vector2, Vector2, 
         pool.Despawn(this);
     }
 
-    protected virtual void OnTriggerEnter2D(Collider2D other)
-    {
-        OnColliderEnter2D(other);
-    }
+    protected virtual void OnTriggerEnter2D(Collider2D other) => OnEnter(other);
+    protected virtual void OnColliderEnter2D(Collider2D other) => OnEnter(other);
 
-    protected virtual void OnColliderEnter2D(Collider2D other)
+    protected virtual void OnEnter(Collider2D other)
     {
-        if(!this.gameObject.activeSelf)
+        if (!this.gameObject.activeSelf)
             return;
 
         var otherHealth = other.GetComponent<UnitHealth>();

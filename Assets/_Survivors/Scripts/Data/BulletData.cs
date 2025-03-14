@@ -28,8 +28,7 @@ public class BulletData : ScriptableObject
     [Space]
     public Sprite Icon;
     [Space]
-    [Header("Explosion Mechanics Not Implemented")]
-    public ExplositonData ExplosionData;
+    public GameObject ExplosionPrefab;
 
     // returns absolute amount of health change, so it should be negative
     public HealthChange GetDamage()

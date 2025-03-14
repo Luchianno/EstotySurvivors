@@ -5,16 +5,19 @@ using Zenject;
 
 public class UpgradeItem : MonoBehaviour
 {
+    [field: SerializeField]
+    public UpgradeData UpgradeData { get; protected set; }
+
+    [Space]
     [SerializeField] Button button;
     [SerializeField] Image icon;
     [SerializeField] Image chest;
 
+    [Space]
+    [SerializeField] float chestAnimationDuration = 1f;
     [SerializeField] Sprite openChestSprite;
     [SerializeField] Sprite closedChestSprite;
-
     [SerializeField] AudioClip selectedSound;
-
-    [SerializeField] float chestAnimationDuration = 1f;
 
     [Inject] SignalBus signalBus;
 
@@ -23,11 +26,22 @@ public class UpgradeItem : MonoBehaviour
         button.onClick.AddListener(OpenChest);
     }
 
-    void Reset()
+    public void Set(UpgradeData upgradeData)
     {
+        UpgradeData = upgradeData;
+
+        icon.sprite = upgradeData.Icon;
         chest.sprite = closedChestSprite;
+        
         icon.rectTransform.localScale = Vector3.zero;
         button.interactable = true;
+    }
+
+    void OnEnable()
+    {
+        icon.rectTransform.DOScale(Vector3.one, chestAnimationDuration)
+            .From(Vector3.zero)
+            .SetEase(Ease.OutBounce);
     }
 
     public void OpenChest()

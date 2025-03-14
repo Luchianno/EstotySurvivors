@@ -1,14 +1,8 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "BulletData", menuName = "💀 Survivors/Bullet Data")]
-public class BulletData : ScriptableObject
+public class BulletData : ScriptableWithDescription
 {
-    public string InternalName;
-
-    public string DisplayName;
-    [TextArea]
-    public string Description;
-
     [Header("Stats")]
     [Min(1)]
     public int DamageMin = 2;

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Video;
 using Zenject;
 
-public class EndgameScreen : UIScreen
+public class EndgameScreen : UIView
 {
     [SerializeField] TextMeshProUGUI scoreLabel;
     [SerializeField] TextMeshProUGUI countDownText;

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Test Level Progression
   m_EditorClassIdentifier: 
   levels:
-  - <ExperienceRequired>k__BackingField: 10
+  - <ExperienceRequired>k__BackingField: 0
     <MaxEnemies>k__BackingField: 20
     EnemyProbability:
     - <Data>k__BackingField: {fileID: 11400000, guid: b47693058bf9a3f4aae4103ea0717978, type: 2}

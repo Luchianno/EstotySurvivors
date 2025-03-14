@@ -3,7 +3,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LandingScreen : UIScreen
+public class LandingScreen : UIView
 {
     [Space]
     [SerializeField] Image title;

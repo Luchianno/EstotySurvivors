@@ -32,6 +32,13 @@ public class WeaponData : ScriptableObject
     [Space]
     public BulletData BulletData;
 
+    // copy BulletData when creating a new weapon
+    public void Awake()
+    {
+        if (BulletData != null)
+            BulletData = Instantiate(BulletData);
+    }
+
     void OValidate()
     {
 

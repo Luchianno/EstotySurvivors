@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 [RequireComponent(typeof(Canvas), typeof(CanvasGroup))]
-public abstract class UIScreen : MonoBehaviour
+public abstract class UIView : MonoBehaviour
 {
     [SerializeField] protected Canvas canvas;
     [SerializeField] protected CanvasGroup mainCanvasGroup;

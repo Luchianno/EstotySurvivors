@@ -2,15 +2,8 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "EnemyData", menuName = "💀 Survivors/Enemy Data", order = 1)]
-public class EnemyData : ScriptableObject
+public class EnemyData : ScriptableWithDescription
 {
-    public string InternalName;
-
-    [Space]
-    public string DisplayName;
-    [TextArea]
-    public string Description;
-
     [Space]
     [Range(1f, 10f)]
     public float SizeMin = 1f;

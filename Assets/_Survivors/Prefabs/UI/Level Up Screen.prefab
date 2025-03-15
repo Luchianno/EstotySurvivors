@@ -396,6 +396,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 275a602319ad14647a1423d8312233d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 5306486974260750276}
+  mainCanvasGroup: {fileID: 1721414150009170032}
+  background: {fileID: 2862900311014467968}
+  panel: {fileID: 5783886009144956399}
+  backGroundFadeDuration: 0.5
+  panelFadeDuration: 0.5
+  DisableGameObjectOnHide: 0
 --- !u!1 &5617200005272604482
 GameObject:
   m_ObjectHideFlags: 0
@@ -496,7 +503,7 @@ GameObject:
   - component: {fileID: 8632733847264024012}
   - component: {fileID: 891338113207449611}
   m_Layer: 5
-  m_Name: Title (1)
+  m_Name: Bottom Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

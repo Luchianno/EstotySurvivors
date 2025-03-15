@@ -2,12 +2,18 @@ using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Zenject;
 
 [RequireComponent(typeof(Canvas), typeof(CanvasGroup))]
 public abstract class UIView : MonoBehaviour
 {
+    public string ViewName;
+    public StartupType Startup = StartupType.DisableGameObject;
+    public bool IsShowing => gameObject.activeSelf && canvas.enabled;
+
     [SerializeField] protected Canvas canvas;
     [SerializeField] protected CanvasGroup mainCanvasGroup;
+    [Space]
     [SerializeField] protected CanvasGroup background;
     [SerializeField] protected CanvasGroup panel;
 
@@ -15,6 +21,58 @@ public abstract class UIView : MonoBehaviour
     [SerializeField] float panelFadeDuration = 0.5f;
 
     public bool DisableGameObjectOnHide;
+
+    [Inject] SignalBus signalBus;
+
+    protected virtual void Awake()
+    {
+        switch (Startup)
+        {
+            case StartupType.DisableGameObject:
+                gameObject.SetActive(false);
+                break;
+            case StartupType.Show:
+                Show();
+                break;
+            case StartupType.Hide:
+                Hide();
+                break;
+        }
+
+        signalBus.Subscribe<UIViewSignal>(OnUIViewSignal);
+    }
+
+    protected virtual void OnUIViewSignal(UIViewSignal signal)
+    {
+        if (signal.ViewName == ViewName)
+        {
+            switch (signal.SignalType)
+            {
+                case UISignalType.Show:
+                    if (gameObject.activeSelf)
+                        return;
+                    Show();
+                    break;
+                case UISignalType.Hide:
+                    if (!gameObject.activeSelf)
+                        return;
+                    Hide();
+                    break;
+                case UISignalType.Toggle:
+                    if (IsShowing)
+                        Hide();
+                    else
+                        Show();
+                    break;
+            }
+        }
+    }
+
+    // we're not using Views that are going to be destroyed, but just in case
+    protected virtual void OnDestroy()
+    {
+        signalBus.TryUnsubscribe<UIViewSignal>(OnUIViewSignal);
+    }
 
     public virtual void Show()
     {
@@ -44,7 +102,7 @@ public abstract class UIView : MonoBehaviour
         ToggleBackground(false);
         TogglePanel(false);
 
-        yield return new WaitForSeconds(Mathf.Max(backGroundFadeDuration, panelFadeDuration));
+        yield return new WaitForSecondsRealtime(Mathf.Max(backGroundFadeDuration, panelFadeDuration));
 
         OnHideAnimationEnded();
     }
@@ -71,6 +129,7 @@ public abstract class UIView : MonoBehaviour
         }
 
         background.DOFade(show ? 1 : 0, backGroundFadeDuration)
+            .SetUpdate(true)
             .SetEase(show ? Ease.OutSine : Ease.InSine);
     }
 
@@ -86,6 +145,14 @@ public abstract class UIView : MonoBehaviour
         }
 
         panel.DOFade(show ? 1 : 0, panelFadeDuration)
+            .SetUpdate(true)
             .SetEase(show ? Ease.OutSine : Ease.InSine);
+    }
+
+    public enum StartupType
+    {
+        DisableGameObject,
+        Show,
+        Hide
     }
 }

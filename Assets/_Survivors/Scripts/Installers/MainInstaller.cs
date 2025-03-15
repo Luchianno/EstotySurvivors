@@ -41,12 +41,13 @@ public class MainInstaller : MonoInstaller
         // find player game object and bind it
         var player = GameObject.FindGameObjectWithTag("Player");
         Container.Bind<Transform>().WithId("Player").FromInstance(player.transform).AsSingle();
+        Container.BindInterfacesAndSelfTo<PlayerMovementController>().FromComponentInHierarchy(true).AsSingle();
 
-        Container.Bind<SpawningArea>().FromComponentInHierarchy(true).AsSingle();
-        Container.Bind<EnemySpawner>().FromComponentInHierarchy(true).AsSingle();
-        Container.Bind<PropSpawner>().FromComponentInHierarchy(true).AsSingle();
+        Container.BindInterfacesAndSelfTo<SpawningArea>().FromComponentInHierarchy(true).AsSingle();
+        Container.BindInterfacesAndSelfTo<EnemySpawner>().FromComponentInHierarchy(true).AsSingle();
+        Container.BindInterfacesAndSelfTo<PropSpawner>().FromComponentInHierarchy(true).AsSingle();
 
-        Container.Bind<EnemyMovementSystem>().FromComponentInHierarchy(true).AsSingle();
+        Container.BindInterfacesAndSelfTo<EnemyMovementSystem>().FromComponentInHierarchy(true).AsSingle();
 
         Container.BindInterfacesAndSelfTo<PlayerStatsManager>().AsSingle();
         Container.BindInterfacesAndSelfTo<ExperienceManager>().AsSingle();
@@ -75,7 +76,7 @@ public class MainInstaller : MonoInstaller
 
         // bullet factory
         Container.BindFactory<Vector2, Vector2, BulletData, SimpleBulletBehaviour, SimpleBulletBehaviour.Factory>()
-            .FromMonoPoolableMemoryPool(x =>
+            .FromPoolableMemoryPool<Vector2, Vector2, BulletData, SimpleBulletBehaviour, BulletPool>(x =>
                 x.WithInitialSize(10)
                 .FromComponentInNewPrefab(bulletPrefab)
                 .UnderTransformGroup("Pools/Bullets")
@@ -142,6 +143,10 @@ public class MainInstaller : MonoInstaller
         // general signals
         Container.DeclareSignal<ScoreChangedSignal>();
         Container.DeclareSignal<AddExperienceSignal>();
+        Container.DeclareSignal<GameStateChangedSignal>();
+
+        // UI signals
+        Container.DeclareSignal<UIViewSignal>();
 
 
         #endregion

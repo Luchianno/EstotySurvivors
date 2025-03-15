@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-public class PlayerMovementController : MonoBehaviour
+public class PlayerMovementController : BasePausableBehaviour
 {
     public UpdateType UpdateWhen = UpdateType.Update;
     public float MovementSpeed = 1f;
@@ -20,7 +20,6 @@ public class PlayerMovementController : MonoBehaviour
             return;
         }
 
-
         if (UpdateWhen == UpdateType.Update)
             Tick();
     }
@@ -32,6 +31,7 @@ public class PlayerMovementController : MonoBehaviour
         animator.SetBool("Running", playerInput.MovementInput.sqrMagnitude >= RunningAnimationThreshold * RunningAnimationThreshold);
     }
 
+    // In case we change movement to be conrtrolled by FixedUpdate or manually through other means
     public enum UpdateType
     {
         Manual,

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Speed 2
   m_EditorClassIdentifier: 
   InternalName: 
-  DisplayName: Piercing Bullets
+  DisplayName: SPEED
   Description: 
-  Type: 0
-  Icon: {fileID: -1002307068, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
+  Type: 3
+  Icon: {fileID: -966295699, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}

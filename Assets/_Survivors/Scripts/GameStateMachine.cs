@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
@@ -11,16 +12,8 @@ public class GameStateMachine : MonoBehaviour
 
     [Inject] SignalBus signalBus;
 
-    // UI Screens
-    [Inject] LandingScreen landingScreen;
-    [Inject(Id = "Lose")] EndgameScreen loseScreen;
-    [Inject(Id = "Win")] EndgameScreen winScreen;
-
     // gameplay systems in need of enabling/disabling based on game state
-    [Inject(Id = "Player")] Transform player;
-    [Inject] EnemySpawner enemySpawner;
-    [Inject] PropSpawner propSpawner;
-    [Inject] EnemyMovementSystem enemyMovementSystem;
+    [Inject] List<IPausable> pausableGameSystems = new List<IPausable>();
 
     // other
     [Inject] PlayerStatsManager statsManager;
@@ -34,73 +27,100 @@ public class GameStateMachine : MonoBehaviour
 
         void OnPlayerDeath(PlayerDeathSignal signal)
         {
-            ChangeState(GameState.DeathScreen);
+            ChangeState(GameState.EndgameLose);
         }
     }
 
     public void ChangeState(GameState gameState)
     {
-        StartCoroutine(ChangeStateRoutine(gameState));
+        if (CurrentGameState == gameState)
+            return;
+
+        ChangeStateRoutine(gameState).Forget();
     }
 
-    IEnumerator ChangeStateRoutine(GameState gameState)
+    void SetPaused(bool isPaused)
     {
+        foreach (var item in pausableGameSystems)
+        {
+            item.SetPaused(isPaused);
+        }
+    }
+
+    async UniTaskVoid ChangeStateRoutine(GameState gameState)
+    {
+        var previousState = CurrentGameState;
+
         CurrentGameState = gameState;
+
+        signalBus.Fire(new GameStateChangedSignal(previousState, CurrentGameState));
 
         switch (CurrentGameState)
         {
             case GameState.Landing:
-                player.gameObject.SetActive(false);
-                enemySpawner.enabled = false;
-                propSpawner.enabled = false;
+                SetPaused(true);
 
                 // activate landing screen
-                landingScreen.Show();
-                yield return new WaitForSeconds(3f);
-                landingScreen.Hide();
-                yield return new WaitForSeconds(0.3f);
+                signalBus.Fire(new UIViewSignal(UISignalType.Show, "Landing"));
+                await UniTask.WaitForSeconds(0.3f);
+                signalBus.Fire(new UIViewSignal(UISignalType.Hide, "Landing"));
+                await UniTask.WaitForSeconds(0.3f);
 
                 ChangeState(GameState.Playing);
 
                 break;
+
+            case GameState.Paused:
+                SetPaused(true);
+
+                // TODO activate pause screen
+
+                break;
             case GameState.Playing:
-                player.gameObject.SetActive(true);
-
-                enemySpawner.enabled = true;
-                propSpawner.enabled = true;
+                SetPaused(false);
 
                 break;
-            case GameState.DeathScreen:
-                audioManager.FadeMusicVolume(0.1f, 0.3f);
-                loseScreen.Show(statsManager.CurrentScore, statsManager.IsNewHighScore);
+            case GameState.LevelUp:
+                Time.timeScale = 0f;
 
-                yield return new WaitForSeconds(5.5f);
-                
-                statsManager.ResetAndSaveHighScore();
+                signalBus.Fire(new UIViewSignal(UISignalType.Show, "LevelUp"));
 
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 break;
-            case GameState.WinScreen:
+            case GameState.EndgameLose:
+            case GameState.EndgameWin:
+                SetPaused(true);
+
+                var isWin = CurrentGameState == GameState.EndgameWin;
+                var viewName = isWin ? "Win" : "Lose";
+
+                // fade out music
                 audioManager.FadeMusicVolume(0.1f, 0.3f);
-                winScreen.Show();
 
-                yield return new WaitForSeconds(5.5f);
-                
+                // update UI with score and highscore and show lose screen
+                signalBus.Fire(new EndGameSignal(isWin, statsManager.CurrentScore, statsManager.IsNewHighScore));
+                signalBus.Fire(new UIViewSignal(UISignalType.Show, viewName));
+
+                // wait for a bit before restarting the game
+                await UniTask.WaitForSeconds(5.5f);
+
+                // don't forget to reset and save  highscore
                 statsManager.ResetAndSaveHighScore();
-
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                break;
+            default:
+                Debug.LogError($"Unhandled game state: {CurrentGameState}");
                 break;
         }
-
-        yield return null;
     }
+
 
 
     public enum GameState
     {
         Landing,
+        Paused,
         Playing,
-        DeathScreen,
-        WinScreen,
+        LevelUp,
+        EndgameLose,
+        EndgameWin,
     }
 }

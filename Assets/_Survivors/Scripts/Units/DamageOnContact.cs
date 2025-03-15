@@ -4,7 +4,7 @@ using Zenject;
 
 // when the player collides with an object that has this script, the player will take damage every interval
 // we override both OnTriggerEnter2D and OnTriggerExit2D, because enemy movement and collision handling might change in future
-public class DamageOnContact : MonoBehaviour
+public class DamageOnContact : BasePausableBehaviour
 {
     const float damageInterval = 1;
 

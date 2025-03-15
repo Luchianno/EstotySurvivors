@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using Zenject;
 
-public class SimpleBulletBehaviour : MonoBehaviour, IPoolable<Vector2, Vector2, BulletData, IMemoryPool>, IDisposable
+public class SimpleBulletBehaviour : BasePausableBehaviour, IPoolable<Vector2, Vector2, BulletData, IMemoryPool>, IDisposable
 {
     [field: SerializeField]
     public BulletData Data { get; protected set; }
@@ -12,6 +12,18 @@ public class SimpleBulletBehaviour : MonoBehaviour, IPoolable<Vector2, Vector2, 
     [SerializeField] SpriteRenderer spriteRenderer;
 
     IMemoryPool pool;
+
+    public override void SetPaused(bool isPaused)
+    {
+        if (isPaused)
+        {
+            body.simulated = false;
+        }
+        else
+        {
+            body.simulated = true;
+        }
+    }
 
     public void OnSpawned(Vector2 position, Vector2 direction, BulletData data, IMemoryPool pool)
     {
@@ -68,7 +80,6 @@ public class SimpleBulletBehaviour : MonoBehaviour, IPoolable<Vector2, Vector2, 
         Dispose();
     }
 
-    public class Factory : PlaceholderFactory<Vector2, Vector2, BulletData, SimpleBulletBehaviour>
-    {
-    }
+    public class Factory : PlaceholderFactory<Vector2, Vector2, BulletData, SimpleBulletBehaviour> { }
+
 }

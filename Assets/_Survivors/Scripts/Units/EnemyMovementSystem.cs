@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using Zenject;
 
-public class EnemyMovementSystem : MonoBehaviour
+public class EnemyMovementSystem : BasePausableBehaviour
 {
     [Inject] EnemySpawner enemySpawner;
 

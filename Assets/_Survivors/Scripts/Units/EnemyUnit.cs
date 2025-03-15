@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Zenject;
 
-public class EnemyUnit : MonoBehaviour, IPoolable<Vector3, EnemyData, IMemoryPool>, IDisposable
+public class EnemyUnit : BasePausableBehaviour, IPoolable<Vector3, EnemyData, IMemoryPool>, IDisposable
 {
     public bool IsAlive => (Health != null) && Health.IsAlive;
 
@@ -22,6 +22,20 @@ public class EnemyUnit : MonoBehaviour, IPoolable<Vector3, EnemyData, IMemoryPoo
     IMemoryPool pool;
     // List of all components that we automatically reset when the enemy is spawned
     List<IResetState> resetables;
+    List<IPausable> pausables;
+
+    public override void SetPaused(bool isPaused)
+    {
+        base.SetPaused(isPaused);
+
+        if (animator != null)
+            animator.enabled = !isPaused;
+
+        foreach (var pausable in pausables)
+        {
+            pausable.SetPaused(isPaused);
+        }
+    }
 
     public void OnSpawned(Vector3 position, EnemyData data, IMemoryPool pool)
     {
@@ -39,7 +53,10 @@ public class EnemyUnit : MonoBehaviour, IPoolable<Vector3, EnemyData, IMemoryPoo
         animator.runtimeAnimatorController = Data.AnimatorController;
 
         if (resetables == null)
-            resetables = GetComponentsInChildren<IResetState>().ToList();
+            resetables = GetComponentsInChildren<IResetState>(true).ToList();
+
+        if (pausables == null)
+            pausables = GetComponentsInChildren<IPausable>(true).ToList();
 
         foreach (var resetable in resetables)
         {

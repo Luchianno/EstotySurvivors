@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Triple Bullets
   m_EditorClassIdentifier: 
   InternalName: 
-  DisplayName: Piercing Bullets
+  DisplayName: 3X BULLETS
   Description: 
-  Type: 0
-  Icon: {fileID: -1002307068, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
+  Type: 2
+  Icon: {fileID: -762074860, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}

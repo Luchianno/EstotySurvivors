@@ -349,7 +349,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tauntChance: 0.0005
-  enemyUnit: {fileID: 1459312378962273229}
+  tauntDistance: 10
+  thisUnit: {fileID: 1459312378962273229}
 --- !u!1 &5363632284654506148
 GameObject:
   m_ObjectHideFlags: 0

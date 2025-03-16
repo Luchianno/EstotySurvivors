@@ -387,6 +387,9 @@ MonoBehaviour:
   OnEnemySpawnedEvent:
     m_PersistentCalls:
       m_Calls: []
+  EnemyDeathEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &6050004264371730782
 GameObject:
   m_ObjectHideFlags: 0
@@ -572,13 +575,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForceOnScreenJoystick: 1
   levelProgression: {fileID: 11400000, guid: d84ab656c7a4b3545a16412f3bbee52f, type: 2}
+  upgradeProgression: {fileID: 11400000, guid: a37366c6b714f814da00f7b16d9f5073, type: 2}
   enemyPrefab: {fileID: 4190426983112607213, guid: b29611e9aa8957848bd7abc937fb3b0d, type: 3}
   bulletPrefab: {fileID: 4190426983112607213, guid: f81657d74ebcbb94b971e153939e110e, type: 3}
   propItemPrefab: {fileID: 2294431465147944749, guid: 8c8ffdcd50f49054f80f59cc2cb5c519, type: 3}
   bulletExplosionPrefab: {fileID: 584933638865669162, guid: fd00706ca56e3c44f8acb244d0466e61, type: 3}
   damagePopupPrefab: {fileID: 2063554451390732439, guid: e856a79b0c961894696a885dc1765ca4, type: 3}
   tauntPopupPrefab: {fileID: 6225879868652454502, guid: ea586dd6228b66a4aa04525ed8b5bf65, type: 3}
-  gameSystems: {fileID: 5336362055185116105}
 --- !u!114 &919334914285274062
 MonoBehaviour:
   m_ObjectHideFlags: 0

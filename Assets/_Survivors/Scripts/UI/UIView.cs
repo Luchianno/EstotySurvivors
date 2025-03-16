@@ -26,6 +26,8 @@ public abstract class UIView : MonoBehaviour
 
     protected virtual void Awake()
     {
+        signalBus.Subscribe<UIViewSignal>(OnUIViewSignal);
+        
         switch (Startup)
         {
             case StartupType.DisableGameObject:
@@ -38,8 +40,6 @@ public abstract class UIView : MonoBehaviour
                 Hide();
                 break;
         }
-
-        signalBus.Subscribe<UIViewSignal>(OnUIViewSignal);
     }
 
     protected virtual void OnUIViewSignal(UIViewSignal signal)

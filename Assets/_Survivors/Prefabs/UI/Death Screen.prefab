@@ -129,6 +129,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d44e1a5150796e4ea45b201984e1566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ViewName: Lose
+  Startup: 0
   canvas: {fileID: 7023279364558726538}
   mainCanvasGroup: {fileID: 5521101346731899901}
   background: {fileID: 6299558051808718981}

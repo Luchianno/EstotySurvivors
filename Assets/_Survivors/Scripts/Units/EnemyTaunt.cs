@@ -3,9 +3,9 @@ using Zenject;
 
 public class EnemyTaunt : BasePausableBehaviour
 {
+    [SerializeField] EnemyUnit thisUnit;
     [SerializeField] float tauntChance = 0.01f;
     [SerializeField] float tauntDistance = 10f; 
-    [SerializeField] EnemyUnit thisUnit;
 
     [Inject(Id = "TauntPopup")] TextPopup.Factory popupFactory;
     [Inject(Id = "Player")] Transform playerUnit;

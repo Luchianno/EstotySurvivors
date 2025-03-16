@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeightedRandomPicker<T>
+public class WeightedRandomPicker<T> 
 {
     float totalWeight;
     List<float> cumulativeWeights = new List<float>();

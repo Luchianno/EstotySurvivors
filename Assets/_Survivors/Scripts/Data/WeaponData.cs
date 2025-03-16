@@ -33,15 +33,17 @@ public class WeaponData : ScriptableObject
     public BulletData BulletData;
 
     // copy BulletData when creating a new weapon
-    public void Awake()
+    public void OnEnable()
     {
+        if (!Application.isPlaying)
+            return;
+
         if (BulletData != null)
             BulletData = Instantiate(BulletData);
     }
 
-    void OValidate()
+    void OnValidate()
     {
-
         if (ClipSize > MaxAmmo)
         {
             ClipSize = MaxAmmo;

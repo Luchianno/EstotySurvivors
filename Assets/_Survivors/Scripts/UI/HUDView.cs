@@ -40,6 +40,7 @@ public class HUDView : MonoBehaviour
     {
         healthBar.SetValueWithoutNotify(1);
         xpBar.SetValueWithoutNotify(0);
+        levelLabel.text = levelPrefix + "1";
         killCountLabel.text = "0";
     }
 

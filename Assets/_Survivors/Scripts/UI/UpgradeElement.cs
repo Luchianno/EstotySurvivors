@@ -1,10 +1,14 @@
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using Zenject;
 
 public class UpgradeElement : MonoBehaviour
 {
+    public UnityEvent<UpgradeData> OnClickEvent = new UnityEvent<UpgradeData>();
+
     [field: SerializeField]
     public UpgradeData UpgradeData { get; protected set; }
 
@@ -17,9 +21,8 @@ public class UpgradeElement : MonoBehaviour
     [SerializeField] float chestAnimationDuration = 1f;
     [SerializeField] Sprite openChestSprite;
     [SerializeField] Sprite closedChestSprite;
-    [SerializeField] AudioClip selectedSound;
+    [SerializeField] TextMeshProUGUI label;
 
-    [Inject] SignalBus signalBus;
 
     void Start()
     {
@@ -31,14 +34,18 @@ public class UpgradeElement : MonoBehaviour
         UpgradeData = upgradeData;
 
         icon.sprite = upgradeData.Icon;
-        chest.sprite = closedChestSprite;
-        
-        icon.rectTransform.localScale = Vector3.zero;
-        button.interactable = true;
+        label.text = upgradeData.DisplayName;
     }
 
     void OnEnable()
     {
+        chest.sprite = closedChestSprite;
+
+        icon.gameObject.SetActive(false);
+        icon.rectTransform.localScale = Vector3.zero;
+
+        button.interactable = true;
+
         icon.rectTransform.DOScale(Vector3.one, chestAnimationDuration)
             .From(Vector3.zero)
             .SetEase(Ease.OutBounce);
@@ -48,15 +55,13 @@ public class UpgradeElement : MonoBehaviour
     {
         button.interactable = false;
         chest.sprite = openChestSprite;
+        icon.gameObject.SetActive(true);
 
         // animate icon
         icon.rectTransform.DOScale(Vector3.one, chestAnimationDuration)
             .From(Vector3.zero)
-            .SetEase(Ease.OutBounce)
-            .OnComplete(() => icon.rectTransform.DOScale(Vector3.zero, chestAnimationDuration).SetEase(Ease.InBounce)
-            );
+            .SetEase(Ease.OutBounce);
 
-        // play sfx
-        signalBus.Fire(new PlaySfxSignal(selectedSound));
+        OnClickEvent?.Invoke(UpgradeData);
     }
 }

@@ -19,6 +19,7 @@ public class ExperienceManager : IInitializable
 
     [Inject] SignalBus signalBus;
     [Inject] LevelProgression levelProgression;
+    [Inject] UpgradeProgression upgradeProgression;
 
     public int TotalExperience { get; protected set; }
 
@@ -45,7 +46,9 @@ public class ExperienceManager : IInitializable
             levelProgression.CurrentLevelIndex++;
             levelsGained++;
 
-            signalBus.Fire(new PlayerLevelUpSignal(levelProgression.CurrentLevelIndex));
+            var levelUpgrades = upgradeProgression.GetUpgradesForLevel(levelProgression.CurrentLevelIndex);
+            
+            signalBus.Fire(new PlayerLevelUpSignal(levelProgression.CurrentLevelIndex + 1, levelUpgrades));
 
             if (levelProgression.CurrentLevelIndex == levelProgression.Levels.Count - 1)
             {

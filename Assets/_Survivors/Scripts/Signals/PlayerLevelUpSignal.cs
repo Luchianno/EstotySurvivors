@@ -1,12 +1,18 @@
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 
-public struct PlayerLevelUpSignal 
+public struct PlayerLevelUpSignal
 {
     public int Level { get; }
 
-    public PlayerLevelUpSignal(int level)
+    public List<UpgradeData> Upgrades { get; }
+
+    public PlayerLevelUpSignal(int level, List<UpgradeData> upgrades = null)
     {
         Level = level;
+
+        Upgrades = upgrades ?? new List<UpgradeData>();
     }
 
     public override string ToString()

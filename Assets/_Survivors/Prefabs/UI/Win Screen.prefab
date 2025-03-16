@@ -265,6 +265,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d44e1a5150796e4ea45b201984e1566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ViewName: Win
+  Startup: 0
   canvas: {fileID: 5107497993443348795}
   mainCanvasGroup: {fileID: 7936635144231192022}
   background: {fileID: 535513648465982655}

@@ -4,7 +4,7 @@ using DG.Tweening;
 using UnityEngine;
 using Zenject;
 
-public class PlayerWeapon : MonoBehaviour
+public class PlayerWeapon : BasePausableBehaviour
 {
     public bool HasTarget => Target != null;
     public bool IsPlayerFlipped => transform.localScale.x < 0;
@@ -27,6 +27,18 @@ public class PlayerWeapon : MonoBehaviour
 
     float timeSinceLastShot = 0;
     List<Collider2D> closeEnemies = new List<Collider2D>();
+
+    void Awake()
+    {
+        if(WeaponData == null)
+        {
+            Debug.LogError("WeaponData is not assigned. Weapon will not work.");
+            return;
+        }
+
+        // instantiate weapon data to avoid modifying the original scriptable object
+        WeaponData = Instantiate(WeaponData);
+    }
 
     void Update()
     {

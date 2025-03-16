@@ -8,17 +8,15 @@ using Random = UnityEngine.Random;
 [CreateAssetMenu(fileName = "DifficultyProgression", menuName = "💀 Survivors/Difficulty Progression")]
 public class LevelProgression : ScriptableObject, ILevelProgression
 {
-    public List<ILevel> Levels => levels.Cast<ILevel>().ToList();
-
     public int CurrentLevelIndex
     {
         get => currentLevelIndex;
         set => currentLevelIndex = Mathf.Clamp(value, 0, levels.Count - 1);
     }
+    public ILevel CurrentLevel => levels[CurrentLevelIndex];
+    public List<ILevel> Levels => levels.Cast<ILevel>().ToList();
 
     int currentLevelIndex = 0;
-
-    public ILevel CurrentLevel => levels[CurrentLevelIndex];
 
     [SerializeField] List<Level> levels;
 

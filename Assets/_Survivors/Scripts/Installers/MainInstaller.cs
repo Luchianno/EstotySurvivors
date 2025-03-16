@@ -7,6 +7,7 @@ public class MainInstaller : MonoInstaller
 
     [Space]
     [SerializeField] LevelProgression levelProgression;
+    [SerializeField] UpgradeProgression upgradeProgression;
 
     [Space]
     [Header("Prefabs")]
@@ -37,11 +38,13 @@ public class MainInstaller : MonoInstaller
         #region Level, Player, Enemies, Props        
 
         Container.BindInterfacesAndSelfTo<LevelProgression>().FromInstance(Instantiate(levelProgression)).AsSingle();
+        Container.BindInterfacesAndSelfTo<UpgradeProgression>().FromInstance(Instantiate(upgradeProgression)).AsSingle();
 
         // find player game object and bind it
         var player = GameObject.FindGameObjectWithTag("Player");
         Container.Bind<Transform>().WithId("Player").FromInstance(player.transform).AsSingle();
-        Container.BindInterfacesAndSelfTo<PlayerMovementController>().FromComponentInHierarchy(true).AsSingle();
+        Container.BindInterfacesAndSelfTo<PlayerMovementController>().FromComponentOn(player).AsSingle();
+        Container.BindInterfacesAndSelfTo<PlayerWeapon>().FromComponentOn(player).AsSingle();
 
         Container.BindInterfacesAndSelfTo<SpawningArea>().FromComponentInHierarchy(true).AsSingle();
         Container.BindInterfacesAndSelfTo<EnemySpawner>().FromComponentInHierarchy(true).AsSingle();
@@ -132,6 +135,8 @@ public class MainInstaller : MonoInstaller
         Container.DeclareSignal<PlayerLevelUpSignal>();
         Container.DeclareSignal<PlaySfxSignal>();
 
+        Container.DeclareSignal<UpgradeSelectedSignal>();
+
         // enemy signals
         Container.DeclareSignal<EnemySpawnedSignal>().OptionalSubscriber();
         Container.DeclareSignal<EnemyDamageSignal>().OptionalSubscriber();
@@ -144,9 +149,11 @@ public class MainInstaller : MonoInstaller
         Container.DeclareSignal<ScoreChangedSignal>();
         Container.DeclareSignal<AddExperienceSignal>();
         Container.DeclareSignal<GameStateChangedSignal>();
+        Container.DeclareSignal<EndGameSignal>();
 
         // UI signals
         Container.DeclareSignal<UIViewSignal>();
+
 
 
         #endregion

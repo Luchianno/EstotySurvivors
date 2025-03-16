@@ -24,6 +24,12 @@ public class PropItem : MonoBehaviour, IPoolable<Vector2, PropData, IMemoryPool>
         if (!gameObject.activeSelf)
             return;
 
+        if (!other.CompareTag("Player"))
+        {
+            Debug.LogError("PropItem collided with non-player object: " + other.name);
+            return;
+        }
+
         signalBus.Fire(new PropPickedSignal(Data));
 
         switch (Data.Type)

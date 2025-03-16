@@ -12,6 +12,7 @@ using Random = UnityEngine.Random;
 public class EnemySpawner : BasePausableBehaviour
 {
     public UnityEvent<EnemyUnit> OnEnemySpawnedEvent;
+    public UnityEvent<EnemyUnit> EnemyDeathEvent;
 
     public HashSet<EnemyUnit> Enemies => enemies;
 
@@ -71,6 +72,8 @@ public class EnemySpawner : BasePausableBehaviour
     void OnEnemyDeath(EnemyDeathSignal signal)
     {
         enemies.Remove(signal.EnemyUnit);
+
+        EnemyDeathEvent.Invoke(signal.EnemyUnit);
     }
 
     IEnumerator UpdateRoutine()
@@ -88,7 +91,7 @@ public class EnemySpawner : BasePausableBehaviour
                 else
                 {
                     // now lets roll a dice to decide how many enemies to spawn
-                    SpawnEnemyGroup(Random.Range(3, 5));
+                    SpawnEnemyGroup(3, 5);
                 }
             }
 
@@ -97,10 +100,4 @@ public class EnemySpawner : BasePausableBehaviour
 
     }
 
-    [Serializable]
-    public struct WeightPair
-    {
-        public EnemyData Data;
-        public float Weight;
-    }
 }

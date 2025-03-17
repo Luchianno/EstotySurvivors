@@ -18,7 +18,7 @@ MonoBehaviour:
   SizeMin: 1
   SizeMax: 1
   SpeedMin: 2
-  SpeedMax: 4
+  SpeedMax: 3
   HealthMin: 10
   HealthMax: 10
   ContactDamageMin: 10

@@ -44,6 +44,9 @@ TagManager:
   - name: Props
     uniqueID: 1331802095
     locked: 0
+  - name: Bullets
+    uniqueID: 2175417053
+    locked: 0
   - name: UI
     uniqueID: 3402717729
     locked: 0

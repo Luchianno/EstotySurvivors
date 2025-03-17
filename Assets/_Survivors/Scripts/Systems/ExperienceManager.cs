@@ -9,12 +9,16 @@ public class ExperienceManager : IInitializable
     {
         get
         {
-            var previousLevelExp = levelProgression.CurrentLevelIndex > 0 ? levelProgression.Levels[levelProgression.CurrentLevelIndex - 1].ExperienceRequired : 0;
-            var nextLevelExp = levelProgression.CurrentLevel.ExperienceRequired;
+            // Handle max level case
+            if (levelProgression.IsMaxLevel)
+                return 1f;
 
-            return (float)(TotalExperience - previousLevelExp) / (nextLevelExp - previousLevelExp);
+            var currentLevelExp = levelProgression.CurrentLevel.ExperienceRequired;
+            var nextLevelExp = levelProgression.NextLevel.ExperienceRequired;
+
+
+            return Mathf.Clamp01((float)(TotalExperience - currentLevelExp) / (float)(nextLevelExp - currentLevelExp));
         }
-
     }
 
     [Inject] SignalBus signalBus;
@@ -37,26 +41,23 @@ public class ExperienceManager : IInitializable
 
     public void AddExperience(int amount)
     {
+        if (amount <= 0)
+            return;
+
         TotalExperience += amount;
 
+        // in case we gained so much experience that we gained several levels at once
         var levelsGained = 0;
 
-        while (TotalExperience >= levelProgression.CurrentLevel.ExperienceRequired)
+        while (!levelProgression.IsMaxLevel && TotalExperience >= levelProgression.NextLevel.ExperienceRequired)
         {
             levelProgression.CurrentLevelIndex++;
             levelsGained++;
 
             var levelUpgrades = upgradeProgression.GetUpgradesForLevel(levelProgression.CurrentLevelIndex);
-            
             signalBus.Fire(new PlayerLevelUpSignal(levelProgression.CurrentLevelIndex + 1, levelUpgrades));
-
-            if (levelProgression.CurrentLevelIndex == levelProgression.Levels.Count - 1)
-            {
-                break;
-            }
         }
 
         signalBus.Fire(new PlayerExperienceGainedSignal(amount, Progress, levelsGained));
     }
-
 }

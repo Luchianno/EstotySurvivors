@@ -14,6 +14,8 @@ public class LevelProgression : ScriptableObject, ILevelProgression
         set => currentLevelIndex = Mathf.Clamp(value, 0, levels.Count - 1);
     }
     public ILevel CurrentLevel => levels[CurrentLevelIndex];
+    public ILevel NextLevel => CurrentLevelIndex < levels.Count - 1 ? levels[CurrentLevelIndex + 1] : default;
+    public bool IsMaxLevel => CurrentLevelIndex == levels.Count - 1;
     public List<ILevel> Levels => levels.Cast<ILevel>().ToList();
 
     int currentLevelIndex = 0;

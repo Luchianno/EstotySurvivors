@@ -406,9 +406,11 @@ MonoBehaviour:
   backGroundFadeDuration: 0.5
   panelFadeDuration: 0.5
   DisableGameObjectOnHide: 0
+  stayAfterOpeningChest: 2
   upgradeElements:
   - {fileID: 1599624012949261951}
   - {fileID: 2385837110868040022}
+  selectedSound: {fileID: 0}
 --- !u!114 &5517187596622086955
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -549,7 +549,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DisableAutoTargetSelection: 0
   Target: {fileID: 0}
-  <WeaponData>k__BackingField: {fileID: 11400000, guid: 23248eb23c8abad45a00ffdbdbf9b397, type: 2}
+  <WeaponData>k__BackingField: {fileID: 11400000, guid: a297d9e18d32df6419a6c898591b6a79, type: 2}
   firePoint: {fileID: 6268316258851589063}
   weaponSprite: {fileID: 7275864281423516695}
   enemyLayer:

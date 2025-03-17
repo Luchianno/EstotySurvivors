@@ -26,7 +26,8 @@ public class PropItem : MonoBehaviour, IPoolable<Vector2, PropData, IMemoryPool>
 
         if (!other.CompareTag("Player"))
         {
-            Debug.LogError("PropItem collided with non-player object: " + other.name);
+            // Debug.LogError("PropItem collided with non-player object: " + other.name, this.gameObject);
+            // Debug.LogError("Prop Layer: " + LayerMask.LayerToName(gameObject.layer) + " other: " + LayerMask.LayerToName(other.gameObject.layer), this.gameObject);
             return;
         }
 

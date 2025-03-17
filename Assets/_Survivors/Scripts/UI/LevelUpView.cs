@@ -44,12 +44,12 @@ public class LevelUpView : UIView
             // disable all elements first
             panel.interactable = false;
 
-            signalBus.Fire(new UpgradeSelectedSignal(data));
             signalBus.Fire(new PlaySfxSignal(selectedSound));
 
             // Wait for the animation to finish before hiding the view
             await UniTask.WaitForSeconds(stayAfterOpeningChest);
 
+            signalBus.Fire(new UpgradeSelectedSignal(data));
             Hide();
         }
     }

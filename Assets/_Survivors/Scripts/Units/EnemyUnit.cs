@@ -47,7 +47,7 @@ public class EnemyUnit : BasePausableBehaviour, IPoolable<Vector3, EnemyData, IM
         Stats = new EnemyStats(Data);
 
         transform.position = position;
-        transform.localScale = Vector3.one * Data.SizeMin;
+        transform.localScale = Vector3.one * Stats.EnemySize;
 
         Health.Max = Stats.MaxHealth;
         animator.runtimeAnimatorController = Data.AnimatorController;

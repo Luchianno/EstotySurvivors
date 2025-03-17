@@ -1,5 +1,6 @@
 using UnityEditor;
 using UnityEngine;
+using Zenject;
 
 // static menu box buttons for editor
 public class EditorMenu
@@ -34,8 +35,54 @@ public class EditorMenu
     {
         GameObject player = GameObject.Find("Player");
 
+        if (player == null)
+        {
+            Debug.LogError("Player not found in scene");
+            return;
+        }
+
         var health = player.GetComponent<PlayerHealth>();
 
+        if (health == null)
+        {
+            Debug.LogError("PlayerHealth component not found on player");
+            return;
+        }
+
+        if (!health.IsAlive)
+        {
+            Debug.Log("Player is already dead");
+            return;
+        }
+
         health.ChangeBy(new HealthChange(-health.Current));
+    }
+
+    [MenuItem("💀 Survivors/Level Up", priority = 120)]
+    static void LevelUp()
+    {
+        GameObject player = GameObject.Find("Player");
+
+        if (player == null)
+        {
+            Debug.LogError("Player not found in scene");
+            return;
+        }
+
+        // get signal bus from zenject
+        var signalBus = ProjectContext.Instance.Container.Resolve<SignalBus>();
+        var levelProgression = ProjectContext.Instance.Container.Resolve<LevelProgression>();
+
+        if(levelProgression.IsMaxLevel)
+        {
+            Debug.Log("Player is already max level");
+            return;
+        }
+
+        // get enogh experience to level up
+        var experience = levelProgression.NextLevel.ExperienceRequired - levelProgression.CurrentLevel.ExperienceRequired;
+
+        signalBus.Fire(new AddExperienceSignal(experience));
+
     }
 }

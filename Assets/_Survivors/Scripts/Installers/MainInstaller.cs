@@ -37,6 +37,7 @@ public class MainInstaller : MonoInstaller
 
         #region Level, Player, Enemies, Props        
 
+        Container.BindInterfacesAndSelfTo<GameStateMachine>().FromComponentInHierarchy(true).AsSingle();
         Container.BindInterfacesAndSelfTo<LevelProgression>().FromInstance(Instantiate(levelProgression)).AsSingle();
         Container.BindInterfacesAndSelfTo<UpgradeProgression>().FromInstance(Instantiate(upgradeProgression)).AsSingle();
 

@@ -22,6 +22,13 @@ public class UpgradeListener : MonoBehaviour
 
     void OnUpgradeSelected(UpgradeSelectedSignal signal)
     {
+        // if we have specific logic for this upgrade, use it
+        if (signal.UpgradeData.UpgradeLogic != default)
+        {
+            signal.UpgradeData.UpgradeLogic.ApplyUpgrade();
+            return;
+        }
+
         switch (signal.UpgradeData.Type)
         {
             case UpgradeType.PiercingBullets:

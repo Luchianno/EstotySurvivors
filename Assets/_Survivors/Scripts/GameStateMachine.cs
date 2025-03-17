@@ -7,8 +7,8 @@ using Zenject;
 
 public class GameStateMachine : MonoBehaviour
 {
-    public bool IsPlaying => CurrentGameState == GameState.Playing;
-    public GameState CurrentGameState { get; protected set; }
+    public bool IsPlaying => CurrentState == GameState.Playing;
+    public GameState CurrentState { get; protected set; }
 
     [Inject] SignalBus signalBus;
 
@@ -40,7 +40,7 @@ public class GameStateMachine : MonoBehaviour
         void OnUpgradeSelected(UpgradeSelectedSignal signal)
         {
             // if we are in level up state, we can go back to playing
-            if (CurrentGameState == GameState.LevelUp)
+            if (CurrentState == GameState.LevelUp)
             {
                 ChangeState(GameState.Playing);
             }
@@ -49,7 +49,7 @@ public class GameStateMachine : MonoBehaviour
 
     public void ChangeState(GameState gameState)
     {
-        if (CurrentGameState == gameState)
+        if (CurrentState == gameState)
             return;
 
         ChangeStateRoutine(gameState).Forget();
@@ -57,13 +57,13 @@ public class GameStateMachine : MonoBehaviour
 
     async UniTaskVoid ChangeStateRoutine(GameState gameState)
     {
-        var previousState = CurrentGameState;
+        var previousState = CurrentState;
 
-        CurrentGameState = gameState;
+        CurrentState = gameState;
 
-        signalBus.Fire(new GameStateChangedSignal(previousState, CurrentGameState));
+        signalBus.Fire(new GameStateChangedSignal(previousState, CurrentState));
 
-        switch (CurrentGameState)
+        switch (CurrentState)
         {
             case GameState.Landing:
                 ToggleGamePaused(true);
@@ -95,7 +95,7 @@ public class GameStateMachine : MonoBehaviour
             case GameState.EndgameWin:
                 ToggleGamePaused(true);
 
-                var isWin = CurrentGameState == GameState.EndgameWin;
+                var isWin = CurrentState == GameState.EndgameWin;
                 var viewName = isWin ? "Win" : "Lose";
 
                 // fade out music
@@ -115,7 +115,7 @@ public class GameStateMachine : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                 break;
             default:
-                Debug.LogError($"Unhandled game state: {CurrentGameState}");
+                Debug.LogError($"Unhandled game state: {CurrentState}");
                 break;
         }
     }

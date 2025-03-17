@@ -56,8 +56,8 @@ public class PropItem : MonoBehaviour, IPoolable<Vector2, PropData, IMemoryPool>
     protected virtual IEnumerator OnPickup()
     {
         // play animations and stuff, then dispose
-        spriteRenderer.transform.DOScale(Vector3.zero, pickupAnimationDuration)
-            .SetEase(Ease.InBounce)
+        spriteRenderer.transform.DOPunchScale(Vector3.one * 2f, pickupAnimationDuration, 1, 0.5f)
+            // .SetEase(Ease.InBounce)
             .OnComplete(Dispose);
 
         yield return null;

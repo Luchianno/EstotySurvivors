@@ -218,6 +218,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 346d349ced304f74f83e711ea6e4a704, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ViewName: Landing
+  Startup: 0
   canvas: {fileID: 5504102511049625808}
   mainCanvasGroup: {fileID: 8176287633203872162}
   background: {fileID: 4975863548464637680}

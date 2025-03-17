@@ -6,15 +6,20 @@ using Zenject;
 // we override both OnTriggerEnter2D and OnTriggerExit2D, because enemy movement and collision handling might change in future
 public class DamageOnContact : BasePausableBehaviour
 {
-    const float damageInterval = 1;
+    [SerializeField] float damageInterval = 1;
 
     [SerializeField] EnemyUnit enemyUnit;
 
-    WaitForSeconds wait = new WaitForSeconds(damageInterval);
+    WaitForSeconds wait;
 
     Coroutine damageCoroutine;
 
     PlayerHealth playerHealth;
+
+    void Awake()
+    {
+        wait = new WaitForSeconds(damageInterval);   
+    }
 
     void OnDisable()
     {

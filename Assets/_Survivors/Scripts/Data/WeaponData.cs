@@ -1,14 +1,8 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "WaeponData", menuName = "💀 Survivors/Weapon Data")]
-public class WeaponData : ScriptableObject
+public class WeaponData : ScriptableWithDescription
 {
-    public string InternalName;
-
-    public string DisplayName;
-    [TextArea]
-    public string Description;
-
     [Header("Stats")]
     [Min(0)]
     public float AutoAimRadius;

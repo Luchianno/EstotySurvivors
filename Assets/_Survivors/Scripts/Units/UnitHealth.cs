@@ -22,8 +22,9 @@ public class UnitHealth : MonoBehaviour, IResetState
             return;
         }
 
-        if (IsInvinsible)
+        if (IsInvinsible && delta.Amount < 0)
         {
+            // if invinsible, ignore damage
             return;
         }
 

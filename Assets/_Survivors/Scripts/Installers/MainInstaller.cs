@@ -2,8 +2,7 @@ using UnityEngine;
 using Zenject;
 
 public class MainInstaller : MonoInstaller
-{
-    public bool ForceOnScreenJoystick = false;
+{   
 
     [Space]
     [SerializeField] LevelProgression levelProgression;
@@ -21,20 +20,6 @@ public class MainInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
-        #region Player Input
-
-        if (Application.isEditor && !ForceOnScreenJoystick)
-        {
-            Container.BindInterfacesAndSelfTo<PlayerInputKeyboard>().AsSingle();
-        }
-        else
-        {
-            Container.BindInterfacesAndSelfTo<PlayerInputJoystick>().AsSingle();
-        }
-
-        #endregion
-
-
         #region Level, Player, Enemies, Props        
 
         Container.BindInterfacesAndSelfTo<GameStateMachine>().FromComponentInHierarchy(true).AsSingle();

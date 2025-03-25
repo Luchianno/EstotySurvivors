@@ -500,8 +500,8 @@ GameObject:
   - component: {fileID: 6325702491854586009}
   - component: {fileID: 3725294285706304326}
   - component: {fileID: 5423397257085917675}
+  - component: {fileID: 7134918065029161077}
   - component: {fileID: 919334914285274062}
-  - component: {fileID: 8065955991465117617}
   - component: {fileID: 9136439079947995571}
   - component: {fileID: 821565179973356169}
   - component: {fileID: 8939208221651815556}
@@ -544,7 +544,7 @@ MonoBehaviour:
   _scriptableObjectInstallers: []
   _monoInstallers:
   - {fileID: 5423397257085917675}
-  - {fileID: 8065955991465117617}
+  - {fileID: 7134918065029161077}
   _installerPrefabs: []
   _findSiblingMonoInstallers: 0
   _autoRun: 1
@@ -575,7 +575,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2c60645c4bf6d84f8e8249fb0d9532e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ForceOnScreenJoystick: 1
   levelProgression: {fileID: 11400000, guid: d84ab656c7a4b3545a16412f3bbee52f, type: 2}
   upgradeProgression: {fileID: 11400000, guid: a37366c6b714f814da00f7b16d9f5073, type: 2}
   enemyPrefab: {fileID: 4190426983112607213, guid: b29611e9aa8957848bd7abc937fb3b0d, type: 3}
@@ -584,6 +583,21 @@ MonoBehaviour:
   bulletExplosionPrefab: {fileID: 584933638865669162, guid: fd00706ca56e3c44f8acb244d0466e61, type: 3}
   damagePopupPrefab: {fileID: 2063554451390732439, guid: e856a79b0c961894696a885dc1765ca4, type: 3}
   tauntPopupPrefab: {fileID: 6225879868652454502, guid: ea586dd6228b66a4aa04525ed8b5bf65, type: 3}
+--- !u!114 &7134918065029161077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8579127551109780919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0ab46e20fe35cf47bde87be20310653, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceOnScreenJoystick: 1
+  joystickParent: UI Canvas/HUD
+  joystick: {fileID: 969399405944179895, guid: 75071096ad894254e89d60693ca6c8a7, type: 3}
 --- !u!114 &919334914285274062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -616,19 +630,6 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
---- !u!114 &8065955991465117617
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8579127551109780919}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46f214af00cb31d4293f49579409a12a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  appSettings: {fileID: 11400000, guid: 0651a091d2fb45d46ba1990cc8f2d4a8, type: 2}
 --- !u!114 &9136439079947995571
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -8,7 +8,7 @@ public class EnemyMovementSystem : BasePausableBehaviour
     [Inject] EnemySpawner enemySpawner;
 
     [Inject(Id = "Player")] Transform player;
-    
+
     void Update()
     {
         UpdateUnits();
@@ -31,7 +31,10 @@ public class EnemyMovementSystem : BasePausableBehaviour
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     void MoveTowardsTarget(EnemyUnit unit, Vector3 target)
     {
-        unit.transform.position = Vector3.MoveTowards(unit.transform.position, target, unit.Stats.Speed * Time.deltaTime);
+        var newPos = Vector3.MoveTowards(unit.transform.position, target, unit.Stats.Speed * Time.deltaTime);
+        unit.transform.position = newPos;
+
+        unit.SpriteRenderer.flipX = newPos.x > target.x;
     }
 
 }

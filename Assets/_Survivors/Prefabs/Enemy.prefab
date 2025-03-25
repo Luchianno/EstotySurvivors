@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 1416667239154226125}
   - component: {fileID: 3551877275939195094}
   - component: {fileID: 3362653438452185679}
-  - component: {fileID: -3887328069084381294}
   - component: {fileID: 1459312378962273229}
+  - component: {fileID: -3887328069084381294}
   - component: {fileID: 1871053108933049496}
   - component: {fileID: 3223360835659233868}
   - component: {fileID: 7919408791015975971}
@@ -252,6 +252,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1459312378962273229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4190426983112607213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 074e55bcb03fc0e4d9034d3f03d686f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Data>k__BackingField: {fileID: 11400000, guid: b47693058bf9a3f4aae4103ea0717978, type: 2}
+  <Health>k__BackingField: {fileID: -3887328069084381294}
+  <SpriteRenderer>k__BackingField: {fileID: 5393853673172609293}
+  animator: {fileID: 3551877275939195094}
 --- !u!114 &-3887328069084381294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,21 +293,6 @@ MonoBehaviour:
   enemyUnit: {fileID: 1459312378962273229}
   spriteRenderer: {fileID: 5393853673172609293}
   shadowRenderer: {fileID: 3641520632169120381}
-  animator: {fileID: 3551877275939195094}
---- !u!114 &1459312378962273229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4190426983112607213}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 074e55bcb03fc0e4d9034d3f03d686f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Data>k__BackingField: {fileID: 11400000, guid: b47693058bf9a3f4aae4103ea0717978, type: 2}
-  <Health>k__BackingField: {fileID: -3887328069084381294}
   animator: {fileID: 3551877275939195094}
 --- !u!114 &1871053108933049496
 MonoBehaviour:
@@ -319,6 +320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb1735f0dba31644c93f9f816f111201, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageInterval: 1
   enemyUnit: {fileID: 1459312378962273229}
 --- !u!114 &7919408791015975971
 MonoBehaviour:
@@ -348,9 +350,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee685747064039945b8823eb6c0a2f7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisUnit: {fileID: 1459312378962273229}
   tauntChance: 0.0005
   tauntDistance: 10
-  thisUnit: {fileID: 1459312378962273229}
 --- !u!1 &5363632284654506148
 GameObject:
   m_ObjectHideFlags: 0

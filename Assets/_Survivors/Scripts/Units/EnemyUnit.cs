@@ -16,6 +16,8 @@ public class EnemyUnit : BasePausableBehaviour, IPoolable<Vector3, EnemyData, IM
 
     [field: SerializeField]
     public EnemyHealth Health { get; protected set; }
+    [field: SerializeField]
+    public SpriteRenderer SpriteRenderer { get; protected set; }
 
     [SerializeField] Animator animator;
 

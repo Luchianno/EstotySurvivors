@@ -71,9 +71,12 @@ public class LevelUpView : UIView
         // enable and set the upgrades
         for (int i = 0; i < upgrades.Count; i++)
         {
-            upgradeElements[i].gameObject.SetActive(true);
-            upgradeElements[i].Set(upgrades[i]);
+            var button = upgradeElements[i];
+
+            button.gameObject.SetActive(true);
+            button.Set(upgrades[i]);
         }
+
     }
 
 

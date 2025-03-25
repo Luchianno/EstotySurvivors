@@ -16,6 +16,9 @@ public class EnemySpawner : BasePausableBehaviour
 
     public HashSet<EnemyUnit> Enemies => enemies;
 
+    [SerializeField] int groupSpawnMinAmount = 3;
+    [SerializeField] int groupSpawnMaxAmount = 5;
+
     HashSet<EnemyUnit> enemies = new HashSet<EnemyUnit>();
 
     [Inject] LevelProgression levelProgression;
@@ -91,7 +94,7 @@ public class EnemySpawner : BasePausableBehaviour
                 else
                 {
                     // now lets roll a dice to decide how many enemies to spawn
-                    SpawnEnemyGroup(3, 5);
+                    SpawnEnemyGroup(groupSpawnMinAmount, groupSpawnMaxAmount);
                 }
             }
 

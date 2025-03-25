@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: UpgradeProgression
   m_EditorClassIdentifier: 
   upgrades:
+  - Upgrades: []
   - Upgrades:
     - {fileID: 11400000, guid: c6d1303efeb8b494187dfc8019fe67a3, type: 2}
     - {fileID: 11400000, guid: fe6b68a95ce07b04b94b8e11aff69120, type: 2}
@@ -21,4 +22,3 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 0bc3227c887a0734895675b5d697f939, type: 2}
   - Upgrades:
     - {fileID: 11400000, guid: 46c3b2c1cb20f2842be0fc43f481e0d7, type: 2}
-    - {fileID: 0}

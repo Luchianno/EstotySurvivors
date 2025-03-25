@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "UpgradeProgression", menuName = "💀 Survivors/Upgrade Progression")]
 public class UpgradeProgression : ScriptableObject
 {
+    [Header("Upgrades for each level\nNote: Player starts at 0 level")]
     [SerializeField] List<LevelUpgrades> upgrades = new List<LevelUpgrades>();
 
     public List<UpgradeData> GetUpgradesForLevel(int level)

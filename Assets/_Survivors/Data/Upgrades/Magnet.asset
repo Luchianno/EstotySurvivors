@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a1a432ac8852fac42b493a288c15bc11, type: 3}
-  m_Name: Triple Bullets 1
+  m_Name: Magnet
   m_EditorClassIdentifier: 
   InternalName: 
   DisplayName: MAGNET

@@ -33,7 +33,7 @@ public class UpgradeElement : MonoBehaviour
     {
         UpgradeData = upgradeData;
 
-        icon.sprite = upgradeData.Icon;
+        icon.sprite = upgradeData?.Icon;
         label.text = upgradeData.DisplayName;
     }
 

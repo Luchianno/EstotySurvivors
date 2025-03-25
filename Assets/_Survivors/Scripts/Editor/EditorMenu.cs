@@ -69,11 +69,14 @@ public class EditorMenu
             return;
         }
 
-        // get signal bus from zenject
-        var signalBus = ProjectContext.Instance.Container.Resolve<SignalBus>();
-        var levelProgression = ProjectContext.Instance.Container.Resolve<LevelProgression>();
+        // get scene context
+        var sceneContext = GameObject.FindFirstObjectByType<SceneContext>(FindObjectsInactive.Include);
 
-        if(levelProgression.IsMaxLevel)
+        // get signal bus from zenject
+        var signalBus = sceneContext.Container.Resolve<SignalBus>();
+        var levelProgression = sceneContext.Container.Resolve<LevelProgression>();
+
+        if (levelProgression.IsMaxLevel)
         {
             Debug.Log("Player is already max level");
             return;

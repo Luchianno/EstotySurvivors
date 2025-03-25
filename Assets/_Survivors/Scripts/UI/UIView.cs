@@ -27,7 +27,7 @@ public abstract class UIView : MonoBehaviour
     protected virtual void Awake()
     {
         signalBus.Subscribe<UIViewSignal>(OnUIViewSignal);
-        
+
         switch (Startup)
         {
             case StartupType.DisableGameObject:
@@ -49,12 +49,12 @@ public abstract class UIView : MonoBehaviour
             switch (signal.SignalType)
             {
                 case UISignalType.Show:
-                    if (gameObject.activeSelf)
+                    if (IsShowing)
                         return;
                     Show();
                     break;
                 case UISignalType.Hide:
-                    if (!gameObject.activeSelf)
+                    if (!IsShowing)
                         return;
                     Hide();
                     break;
@@ -143,10 +143,23 @@ public abstract class UIView : MonoBehaviour
             panel.alpha = 0;
             panel.gameObject.SetActive(true);
         }
+        else
+        {
+            panel.interactable = false;
+            panel.blocksRaycasts = false;
+        }
 
         panel.DOFade(show ? 1 : 0, panelFadeDuration)
             .SetUpdate(true)
-            .SetEase(show ? Ease.OutSine : Ease.InSine);
+            .SetEase(show ? Ease.OutSine : Ease.InSine)
+            .OnComplete(() =>
+            {
+                if (show)
+                {
+                    panel.interactable = true;
+                    panel.blocksRaycasts = true;
+                }
+            });
     }
 
     public enum StartupType

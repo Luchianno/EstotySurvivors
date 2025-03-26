@@ -76,10 +76,8 @@ public class HUDView : MonoBehaviour
         // fill the xp bar as many times as levels gained
         for (int i = 0; i < signal.LevelsGained; i++)
         {
-            sequence.Append(xpBar.DOValue(1, xpAnimationDuration).SetEase(Ease.OutCubic)).OnComplete(() =>
-            {
-                signalBus.Fire(new PlaySfxSignal(levelUpSound));
-            });
+            signalBus.Fire(new PlaySfxSignal(levelUpSound));
+            sequence.Append(xpBar.DOValue(1, xpAnimationDuration).SetEase(Ease.OutCubic));
             sequence.AppendInterval(0.5f);
             sequence.Append(xpBar.DOValue(0, 0));
         }

@@ -2,7 +2,7 @@ using UnityEngine;
 using Zenject;
 
 public class MainInstaller : MonoInstaller
-{   
+{
 
     [Space]
     [SerializeField] LevelProgression levelProgression;
@@ -56,20 +56,20 @@ public class MainInstaller : MonoInstaller
         #region Pools
 
         // enemy pool
-        Container.BindFactory<Vector3, EnemyData, EnemyUnit, EnemyUnit.Factory>()
-            .FromMonoPoolableMemoryPool(x =>
-                x.WithInitialSize(10)
-                .FromComponentInNewPrefab(enemyPrefab)
-                .UnderTransformGroup("Pools/Enemies")
-            );
+        Container.BindMemoryPool<EnemyUnit, EnemyUnit.Pool>()
+            .WithInitialSize(10)
+            .FromComponentInNewPrefab(enemyPrefab)
+            .UnderTransformGroup("Pools/Enemies")
+            .AsCached()
+            .NonLazy();
 
-        // bullet factory
-        Container.BindFactory<Vector2, Vector2, BulletData, SimpleBulletBehaviour, SimpleBulletBehaviour.Factory>()
-            .FromPoolableMemoryPool<Vector2, Vector2, BulletData, SimpleBulletBehaviour, BulletPool>(x =>
-                x.WithInitialSize(10)
-                .FromComponentInNewPrefab(bulletPrefab)
-                .UnderTransformGroup("Pools/Bullets")
-            );
+        // bullet pool
+        Container.BindMemoryPool<SimpleBulletBehaviour, SimpleBulletBehaviour.Pool>()
+            .WithInitialSize(10)
+            .FromComponentInNewPrefab(bulletPrefab)
+            .UnderTransformGroup("Pools/Bullets")
+            .AsCached()
+            .NonLazy();
 
         // prop factory
         Container.BindFactory<Vector2, PropData, PropItem, PropItem.Factory>()
@@ -104,6 +104,10 @@ public class MainInstaller : MonoInstaller
                 .FromComponentInNewPrefab(tauntPopupPrefab)
                 .UnderTransformGroup("TextPopups")
             );
+
+        // bind IPausable pools
+        Container.Bind<IPausable>().To<EnemyUnit.Pool>().FromResolve();
+        Container.Bind<IPausable>().To<SimpleBulletBehaviour.Pool>().FromResolve();
 
         #endregion
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -15,6 +16,8 @@ public class SimpleBulletBehaviour : BasePausableBehaviour, IPoolable<Vector2, V
 
     public override void SetPaused(bool isPaused)
     {
+        base.SetPaused(isPaused);
+
         if (isPaused)
         {
             body.simulated = false;
@@ -35,14 +38,22 @@ public class SimpleBulletBehaviour : BasePausableBehaviour, IPoolable<Vector2, V
 
         spriteRenderer.sprite = data.Icon;
 
+        body.simulated = true;
         body.linearVelocity = transform.up * data.Speed;
 
-        StartCoroutine(DestroyAfter(data.LifeTime));
+        DestroyAfter(data.LifeTime).Forget();
 
-        IEnumerator DestroyAfter(float time)
+        // despawn after lifetime. but pause if this component is paused
+        async UniTaskVoid DestroyAfter(float time)
         {
-            yield return new WaitForSeconds(time);
-            Dispose();
+            float elapsed = 0f;
+
+            while (elapsed < time)
+            {
+                await UniTask.WaitUntil(() => this.enabled);
+                elapsed += Time.deltaTime;
+                await UniTask.Yield(PlayerLoopTiming.Update);
+            }
         }
     }
 
@@ -80,6 +91,5 @@ public class SimpleBulletBehaviour : BasePausableBehaviour, IPoolable<Vector2, V
         Dispose();
     }
 
-    public class Factory : PlaceholderFactory<Vector2, Vector2, BulletData, SimpleBulletBehaviour> { }
-
+    public class Pool : PausableMonoPoolableMemoryPool<Vector2, Vector2, BulletData, SimpleBulletBehaviour> { }
 }

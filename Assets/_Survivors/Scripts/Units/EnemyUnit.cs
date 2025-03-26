@@ -57,8 +57,12 @@ public class EnemyUnit : BasePausableBehaviour, IPoolable<Vector3, EnemyData, IM
         if (resetables == null)
             resetables = GetComponentsInChildren<IResetState>(true).ToList();
 
+        // get all pausables except self
         if (pausables == null)
+        {
             pausables = GetComponentsInChildren<IPausable>(true).ToList();
+            pausables.Remove(this);
+        }
 
         foreach (var resetable in resetables)
         {
@@ -76,6 +80,8 @@ public class EnemyUnit : BasePausableBehaviour, IPoolable<Vector3, EnemyData, IM
         pool.Despawn(this);
     }
 
-    public class Factory : PlaceholderFactory<Vector3, EnemyData, EnemyUnit> { }
+    public class Pool : PausableMonoPoolableMemoryPool<Vector3, EnemyData, EnemyUnit>
+    {
+    }
 
 }

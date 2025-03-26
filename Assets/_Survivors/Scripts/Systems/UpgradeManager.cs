@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class UpgradeListener : MonoBehaviour
+public class UpgradeManager : MonoBehaviour
 {
     [field: SerializeField]
     public List<UpgradeData> SelectedUpgrades { get; protected set; } = new List<UpgradeData>();

@@ -391,6 +391,8 @@ MonoBehaviour:
   EnemyDeathEvent:
     m_PersistentCalls:
       m_Calls: []
+  groupSpawnMinAmount: 3
+  groupSpawnMaxAmount: 5
 --- !u!1 &5541177502758087447
 GameObject:
   m_ObjectHideFlags: 0
@@ -402,7 +404,7 @@ GameObject:
   - component: {fileID: 7204942356283862768}
   - component: {fileID: 470215700670899738}
   m_Layer: 0
-  m_Name: Upgrade Listener
+  m_Name: Upgrade System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

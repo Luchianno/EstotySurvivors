@@ -23,7 +23,7 @@ public class PlayerWeapon : BasePausableBehaviour
     [SerializeField] LayerMask enemyLayer;
 
 
-    [Inject] SimpleBulletBehaviour.Factory bulletFactory;
+    [Inject] SimpleBulletBehaviour.Pool bulletFactory;
 
     float timeSinceLastShot = 0;
     List<Collider2D> closeEnemies = new List<Collider2D>();

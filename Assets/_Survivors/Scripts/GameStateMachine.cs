@@ -8,12 +8,12 @@ using Zenject;
 public class GameStateMachine : MonoBehaviour
 {
     public bool IsPlaying => CurrentState == GameState.Playing;
-    public GameState CurrentState { get; protected set; }
+    public GameState CurrentState { get; protected set; } = GameState.None;
 
     [Inject] SignalBus signalBus;
 
     // gameplay systems in need of enabling/disabling based on game state
-    [Inject] List<IPausable> pausableGameSystems = new List<IPausable>();
+    [Inject] List<IPausable> pausableGameSystems;
 
     // other
     [Inject] PlayerStatsManager statsManager;
@@ -70,7 +70,7 @@ public class GameStateMachine : MonoBehaviour
 
                 // activate landing screen
                 signalBus.Fire(new UIViewSignal(UISignalType.Show, "Landing"));
-                await UniTask.WaitForSeconds(0.3f);
+                await UniTask.WaitForSeconds(3f);
                 signalBus.Fire(new UIViewSignal(UISignalType.Hide, "Landing"));
                 await UniTask.WaitForSeconds(0.3f);
 
@@ -130,6 +130,7 @@ public class GameStateMachine : MonoBehaviour
 
     public enum GameState
     {
+        None,
         Landing,
         Paused,
         Playing,

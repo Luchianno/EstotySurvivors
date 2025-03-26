@@ -6,7 +6,7 @@ public class BulletExplosion : MonoBehaviour, IPoolable<Vector2, IMemoryPool>, I
 {
     [SerializeField] BulletData bulletData;
     
-    [Inject] SimpleBulletBehaviour.Factory bulletFactory;
+    [Inject] SimpleBulletBehaviour.Pool bulletFactory;
     [Inject] SignalBus signalBus;
 
     IMemoryPool pool;

@@ -23,7 +23,7 @@ public class EnemySpawner : BasePausableBehaviour
 
     [Inject] LevelProgression levelProgression;
     [Inject] SpawningArea spawningArea;
-    [Inject] EnemyUnit.Factory enemyFactory;
+    [Inject] EnemyUnit.Pool enemyFactory;
 
     // cache WaitForSeconds to avoid creating extra garbage
     WaitForSeconds waitASecond = new WaitForSeconds(1f);

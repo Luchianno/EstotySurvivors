@@ -32,6 +32,11 @@ public class EnemyData : ScriptableWithDescription
 
     void OnValidate()
     {
+        if(SizeMin > SizeMax)
+        {
+            SizeMax = SizeMin;
+        }
+
         if (SpeedMin > SpeedMax)
         {
             SpeedMax = SpeedMin;

@@ -15,7 +15,7 @@ public class BulletData : ScriptableWithDescription
     [Min(0)]
     public float Speed = 10f;
     [Min(0)]
-    public float LifeTime = 2f;
+    public float Lifetime = 2f;
     public bool IsPiercing;
     public bool IsExplosive;
 

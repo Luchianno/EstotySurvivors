@@ -14,10 +14,9 @@ public class GameStateMachine : MonoBehaviour
 
     // gameplay systems in need of enabling/disabling based on game state
     [Inject] List<IPausable> pausableGameSystems;
-
-    // other
     [Inject] PlayerStatsManager statsManager;
     [Inject] AudioManager audioManager;
+    [Inject] LevelProgression levelProgression;
 
     void Start()
     {
@@ -34,7 +33,8 @@ public class GameStateMachine : MonoBehaviour
 
         void OnPlayerLevelUp(PlayerLevelUpSignal signal)
         {
-            ChangeState(GameState.LevelUp);
+            // if it's a last level up, we go to endgame win state
+            ChangeState(levelProgression.IsMaxLevel ? GameState.EndgameWin : GameState.LevelUp);
         }
 
         void OnUpgradeSelected(UpgradeSelectedSignal signal)

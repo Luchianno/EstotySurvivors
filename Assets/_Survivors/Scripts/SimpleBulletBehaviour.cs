@@ -41,18 +41,24 @@ public class SimpleBulletBehaviour : BasePausableBehaviour, IPoolable<Vector2, V
         body.simulated = true;
         body.linearVelocity = transform.up * data.Speed;
 
-        DestroyAfter(data.LifeTime).Forget();
+        StartCoroutine(DestroyAfter(data.Lifetime));
 
         // despawn after lifetime. but pause if this component is paused
-        async UniTaskVoid DestroyAfter(float time)
+        IEnumerator DestroyAfter(float time)
         {
             float elapsed = 0f;
 
             while (elapsed < time)
             {
-                await UniTask.WaitUntil(() => this.enabled);
+                if (!this)
+                    yield break;
+
+                if (!this.enabled)
+                    yield return null;
+
                 elapsed += Time.deltaTime;
-                await UniTask.Yield(PlayerLoopTiming.Update);
+
+                yield return null;
             }
         }
     }
@@ -61,6 +67,8 @@ public class SimpleBulletBehaviour : BasePausableBehaviour, IPoolable<Vector2, V
     {
         pool = null;
         Data = null;
+
+        StopAllCoroutines();
     }
 
     public void Dispose()

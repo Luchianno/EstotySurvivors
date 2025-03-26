@@ -7,8 +7,8 @@ public class ProjectInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
-        var settings = ScriptableObject.CreateInstance<AppSettings>();
-        settings.LoadFromPreferences();
+        var settings = Instantiate(appSettings);
+        // settings.LoadFromPreferences();
 
         Application.targetFrameRate = settings.PreferredFrameRate;
 

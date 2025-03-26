@@ -19,8 +19,8 @@ MonoBehaviour:
   SizeMax: 1
   SpeedMin: 1
   SpeedMax: 2
-  HealthMin: 50
-  HealthMax: 50
+  HealthMin: 20
+  HealthMax: 20
   ContactDamageMin: 30
   ContactDamageMax: 30
   AnimatorController: {fileID: 22100000, guid: 25f7a818644b68042bb0c0c2a28d1550, type: 2}

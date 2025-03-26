@@ -16,7 +16,7 @@ MonoBehaviour:
   DisplayName: Shotgun Slug
   Description: 
   DamageMin: 1
-  DamageMax: 1
+  DamageMax: 2
   CriticalChance: 0.05
   CriticalMultiplier: 2
   Speed: 10

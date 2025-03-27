@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 [Serializable]
 public class Level : ILevel
 {
+    [field: SerializeField, TextArea] public string LevelNotes { get; protected set; }
     [field: SerializeField] public int ExperienceRequired { get; protected set; }
     [field: SerializeField] public int MaxEnemies { get; protected set; }
     [SerializeField] List<EnemyWeightPair> EnemyProbability;

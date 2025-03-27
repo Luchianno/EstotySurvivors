@@ -15,8 +15,8 @@ MonoBehaviour:
   InternalName: Fast Skeleton
   DisplayName: 
   Description: 
-  SizeMin: 1
-  SizeMax: 1
+  SizeMin: 2
+  SizeMax: 2
   SpeedMin: 1
   SpeedMax: 2
   HealthMin: 20
